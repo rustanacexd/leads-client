@@ -16,7 +16,7 @@
   </ul>
 </template>
 <script>
-  export default{
+  export default {
     name: 'p-pagination',
     props: {
       type: {
@@ -98,16 +98,24 @@
       },
       changePage (item) {
         this.$emit('input', item)
+        this.getData(item)
       },
       nextPage () {
         if (this.value < this.totalPages) {
           this.$emit('input', this.value + 1)
+          this.getData(this.value + 1)
         }
       },
       prevPage () {
         if (this.value > 1) {
           this.$emit('input', this.value - 1)
+          this.getData(this.value - 1)
         }
+      },
+      getData (value) {
+        this.$store.dispatch('getContacts', {
+          page: value
+        })
       }
     },
     watch: {

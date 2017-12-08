@@ -4,18 +4,13 @@ const state = {
   pagedContacts: [],
   totalContacts: 0,
   nextURL: '',
-  prevURL: ''
-}
-
-const getters = {
-  pagedContacts (state) {
-    return state.pagedContacts
-  }
+  prevURL: '',
+  loading: true
 }
 
 const actions = {
-  getContacts: ({commit}) => {
-    contact.getContacts().then(data => commit('SET_CONTACTS', data))
+  getContacts: ({commit}, {page}) => {
+    contact.getContacts(page).then(data => commit('SET_CONTACTS', data))
   }
 }
 
@@ -23,14 +18,14 @@ const mutations = {
   'SET_CONTACTS' (state, data) {
     state.pagedContacts = data.results
     state.totalContacts = data.count
-    state.nextURL = data.nextURL
-    state.prevURL = data.prevURL
+    state.nextURL = data.next
+    state.prevURL = data.previous
+    state.loading = false
   }
 }
 
 export default {
   state,
-  getters,
   actions,
   mutations
 }

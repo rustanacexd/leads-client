@@ -5,7 +5,7 @@ const instance = axios.create({
 })
 
 export default {
-  getContacts: (page = 1) => {
+  getContacts: (page) => {
     return instance.get(`/contact/?page=${page}`)
       .then(response => response.data)
       .catch(error => console.log(error))

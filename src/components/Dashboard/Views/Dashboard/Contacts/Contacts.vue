@@ -23,18 +23,6 @@
       </div>
       <div class="card-content row">
         <div class="col-sm-6">
-          <el-select
-            class="select-default"
-            v-model="pagination.perPage"
-            placeholder="Per page">
-            <el-option
-              class="select-default"
-              v-for="item in pagination.perPageOptions"
-              :key="item"
-              :label="item"
-              :value="item">
-            </el-option>
-          </el-select>
         </div>
         <div class="col-sm-6">
           <div class="pull-right">
@@ -46,7 +34,8 @@
         </div>
         <div class="col-sm-12">
           <el-table class="table-striped"
-                    :data="queriedData"
+                    :data="pagedContacts"
+                    v-loading.fullscreen.lock="loading"
                     border
                     style="width: 100%"
                     @selection-change="handleSelectionChange">
@@ -96,6 +85,7 @@
   import {Table, TableColumn, Select, Option, Loading} from 'element-ui'
   import PPagination from 'src/components/UIComponents/Pagination.vue'
   import swal from 'sweetalert2'
+  import {mapState} from 'vuex'
 
   Vue.use(Table)
   Vue.use(TableColumn)
@@ -109,34 +99,11 @@
       PPagination
     },
     computed: {
-      pagedData () {
-        return this.$store.getters.pagedContacts
-      },
-      /***
-       * Searches through table data and returns a paginated array.
-       * Note that this should not be used for table with a lot of data as it might be slow!
-       * Do the search and the pagination on the server and display the data retrieved from server instead.
-       * @returns {computed.pagedData}
-       */
-      queriedData () {
-        if (!this.searchQuery) {
-          this.pagination.total = this.$store.state.contacts.totalContacts
-          return this.pagedData
-        }
-        let result = this.tableData
-          .filter((row) => {
-            let isIncluded = false
-            for (let key of this.propsToSearch) {
-              let rowValue = row[key].toString()
-              if (rowValue.includes && rowValue.includes(this.searchQuery)) {
-                isIncluded = true
-              }
-            }
-            return isIncluded
-          })
-        this.pagination.total = result.length
-        return result.slice(this.from, this.to)
-      },
+      ...mapState({
+        loading: state => state.contacts.loading,
+        pagedContacts: state => state.contacts.pagedContacts,
+        totalContacts: state => state.contacts.totalContacts
+      }),
       to () {
         let highBound = this.from + this.pagination.perPage
         if (this.total < highBound) {
@@ -149,7 +116,7 @@
       },
       total () {
         this.pagination.total = this.$store.state.contacts.totalContacts
-        return this.$store.state.contacts.totalContacts
+        return this.totalContacts
       }
     },
     data () {
@@ -157,12 +124,12 @@
         pagination: {
           perPage: 20,
           currentPage: 1,
-          perPageOptions: [20, 50, 100, 150, 200],
+          perPageOptions: [20, 50, 75, 100],
           total: 0
         },
         multipleSelection: [],
         searchQuery: '',
-        propsToSearch: ['firstName', 'email', 'lastName'],
+        propsToSearch: ['first_name', 'email', 'last_name'],
         tableColumns: [
           {prop: 'first_name', label: 'First Name', minWidth: 250},
           {prop: 'last_name', label: 'Last Name', minWidth: 250},
@@ -185,8 +152,7 @@
           {prop: 'email_score', label: 'Email Score', minWidth: 200},
           {prop: 'created', label: 'Created', minWidth: 200},
           {prop: 'updated', label: 'Last Updated', minWidth: 200}
-        ],
-        tableData: []
+        ]
       }
     },
     methods: {
@@ -226,7 +192,7 @@
       }
     },
     created () {
-      this.$store.dispatch('getContacts')
+      this.$store.dispatch('getContacts', {page: 1})
     }
   }
 
