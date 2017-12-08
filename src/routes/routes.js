@@ -5,9 +5,15 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 import Overview from 'src/components/Dashboard/Views/Dashboard/Overview.vue'
 import Stats from 'src/components/Dashboard/Views/Dashboard/Stats.vue'
 import Contacts from 'src/components/Dashboard/Views/Dashboard/Contacts/Contacts.vue'
+import AddContact from 'src/components/Dashboard/Views/Dashboard/Contacts/AddContact.vue'
 import Segments from 'src/components/Dashboard/Views/Dashboard/Segments.vue'
 
 const routes = [
+  {
+    path: '/',
+    component: DashboardLayout,
+    redirect: '/admin/overview'
+  },
   {
     path: '/admin',
     component: DashboardLayout,
@@ -27,6 +33,11 @@ const routes = [
         path: 'contacts',
         name: 'Contacts',
         component: Contacts
+      },
+      {
+        path: 'contacts/add',
+        name: 'Add Contact',
+        component: AddContact
       },
       {
         path: 'segments',

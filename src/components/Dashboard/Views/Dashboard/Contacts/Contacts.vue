@@ -10,7 +10,7 @@
       <div class="row" style="margin-bottom: 20px">
         <div class="col-lg-6 col-lg-offset-6">
           <div class="pull-right">
-            <button class="btn btn-primary btn-fill btn-wd">Add new contact</button>
+            <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add Contact'})">Add new contact</button>
             <button class="btn btn-primary btn-fill btn-wd">Import</button>
             <button class="btn btn-primary btn-fill btn-wd">Export</button>
           </div>
