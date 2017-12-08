@@ -32,6 +32,16 @@
             </label>
           </div>
         </div>
+        <div class="col-sm-6 pagination-info">
+          <p class="category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>
+        </div>
+        <div class="col-sm-6">
+          <p-pagination class="pull-right"
+                        v-model="pagination.currentPage"
+                        :per-page="pagination.perPage"
+                        :total="pagination.total">
+          </p-pagination>
+        </div>
         <div class="col-sm-12">
           <el-table class="table-striped"
                     :data="pagedContacts"
@@ -93,7 +103,6 @@
   Vue.use(Option)
   Vue.use(Loading.directive)
 
-
   export default {
     components: {
       PPagination
@@ -151,16 +160,20 @@
           {prop: 'position', label: 'Position', minWidth: 200},
           {prop: 'email_score', label: 'Email Score', minWidth: 200},
           {prop: 'created', label: 'Created', minWidth: 200},
-          {prop: 'updated', label: 'Last Updated', minWidth: 200}
+          {prop: 'last_updated', label: 'Last Updated', minWidth: 200}
         ]
       }
     },
     methods: {
+      deleteContact ({indexToDelete, contactID}) {
+        this.$store.dispatch('deleteContact', {contactID, indexToDelete})
+      },
       handleEdit (index, row) {
         alert(`Your want to edit ${row.name}`)
       },
       handleDelete (index, row) {
-        let tableData = this.tableData
+        let tableData = this.pagedContacts
+        const deleteContact = this.deleteContact
         swal({
           title: 'Are you sure?',
           text: `You won't be able to revert this!`,
@@ -172,9 +185,12 @@
           buttonsStyling: false
         }).then(function () {
           let indexToDelete = tableData.findIndex((tableRow) => tableRow.id === row.id)
+          const contactID = tableData[indexToDelete].id
+
           if (indexToDelete >= 0) {
-            tableData.splice(indexToDelete, 1)
+            deleteContact({indexToDelete, contactID})
           }
+
           swal({
             title: 'Deleted!',
             text: 'Contact has been deleted.',
@@ -182,6 +198,7 @@
             confirmButtonClass: 'btn btn-success btn-fill',
             buttonsStyling: false
           })
+        }).catch(() => {
         })
       },
       handleSelectionChange (val) {

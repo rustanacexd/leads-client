@@ -11,6 +11,10 @@ const state = {
 const actions = {
   getContacts: ({commit}, {page}) => {
     contact.getContacts(page).then(data => commit('SET_CONTACTS', data))
+  },
+
+  deleteContact: ({commit}, {indexToDelete, contactID}) => {
+    contact.deleteContact(contactID).then(() => commit('DELETE_CONTACT', indexToDelete))
   }
 }
 
@@ -21,6 +25,10 @@ const mutations = {
     state.nextURL = data.next
     state.prevURL = data.previous
     state.loading = false
+  },
+  'DELETE_CONTACT' (state, contact) {
+    state.pagedContacts.splice(contact, 1)
+    state.totalContacts -= 1
   }
 }
 

@@ -9,5 +9,8 @@ export default {
     return instance.get(`/contact/?page=${page}`)
       .then(response => response.data)
       .catch(error => console.log(error))
+  },
+  deleteContact: (contactID) => {
+    return instance.delete(`/contact/${contactID}`)
   }
 }
