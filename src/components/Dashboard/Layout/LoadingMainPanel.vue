@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-loading="true" id="loading">
+  <div class="row" v-loading.fullscreen.lock="loading" id="loading">
   </div>
 </template>
 <script>
@@ -7,7 +7,9 @@
   import {Loading} from 'element-ui'
 
   Vue.use(Loading.directive)
-  export default {}
+  export default {
+    props: ['loading']
+  }
 </script>
 <style>
   #loading {
@@ -21,6 +23,6 @@
   }
 
   .el-loading-mask {
-    background: transparent !important;
+    background: rgba(0, 0, 0, 0.2);
   }
 </style>

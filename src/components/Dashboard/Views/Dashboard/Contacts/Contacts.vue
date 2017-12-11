@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <loading-main-panel :loading="loading"></loading-main-panel>
     <div class="col-md-12">
       <h4 class="title">Lorem ipsum dolor sit.</h4>
       <p class="category">
@@ -10,7 +11,9 @@
       <div class="row" style="margin-bottom: 20px">
         <div class="col-lg-6 col-lg-offset-6">
           <div class="pull-right">
-            <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add Contact'})">Add new contact</button>
+            <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add Contact'})">Add new
+              contact
+            </button>
             <button class="btn btn-primary btn-fill btn-wd">Import</button>
             <button class="btn btn-primary btn-fill btn-wd">Export</button>
           </div>
@@ -27,7 +30,7 @@
         <div class="col-sm-6">
           <div class="pull-right">
             <label>
-              <input type="search" class="form-control input-sm" placeholder="Search records" v-model="searchQuery"
+              <input type="search" class="form-control input-sm" placeholder="Search contact" v-model="searchQuery"
                      aria-controls="datatables">
             </label>
           </div>
@@ -43,9 +46,9 @@
           </p-pagination>
         </div>
         <div class="col-sm-12">
+
           <el-table class="table-striped"
-                    :data="pagedContacts"
-                    v-loading.fullscreen.lock="loading"
+                    :data="paged"
                     border
                     style="width: 100%"
                     @selection-change="handleSelectionChange">
@@ -76,23 +79,14 @@
             </el-table-column>
           </el-table>
         </div>
-        <div class="col-sm-6 pagination-info">
-          <p class="category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>
-        </div>
-        <div class="col-sm-6">
-          <p-pagination class="pull-right"
-                        v-model="pagination.currentPage"
-                        :per-page="pagination.perPage"
-                        :total="pagination.total">
-          </p-pagination>
-        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
   import Vue from 'vue'
-  import {Table, TableColumn, Select, Option, Loading} from 'element-ui'
+  import {Table, TableColumn, Select, Option} from 'element-ui'
+  import LoadingMainPanel from 'src/components/Dashboard/Layout/LoadingMainPanel.vue'
   import PPagination from 'src/components/UIComponents/Pagination.vue'
   import swal from 'sweetalert2'
   import {mapState} from 'vuex'
@@ -101,17 +95,16 @@
   Vue.use(TableColumn)
   Vue.use(Select)
   Vue.use(Option)
-  Vue.use(Loading.directive)
 
   export default {
     components: {
-      PPagination
+      PPagination,
+      LoadingMainPanel
     },
     computed: {
       ...mapState({
-        loading: state => state.contacts.loading,
-        pagedContacts: state => state.contacts.pagedContacts,
-        totalContacts: state => state.contacts.totalContacts
+        loading: state => state.loading,
+        paged: state => state.contact.paged
       }),
       to () {
         let highBound = this.from + this.pagination.perPage
@@ -124,16 +117,15 @@
         return this.pagination.perPage * (this.pagination.currentPage - 1)
       },
       total () {
-        this.pagination.total = this.$store.state.contacts.totalContacts
-        return this.totalContacts
+        this.pagination.total = this.$store.state.contact.total
+        return this.$store.state.contact.total
       }
     },
     data () {
       return {
         pagination: {
-          perPage: 20,
+          perPage: 50,
           currentPage: 1,
-          perPageOptions: [20, 50, 75, 100],
           total: 0
         },
         multipleSelection: [],
@@ -145,6 +137,8 @@
           {prop: 'full_name', label: 'Full Name', minWidth: 250},
           {prop: 'organization', label: 'Organization', minWidth: 250},
           {prop: 'email', label: 'Email', minWidth: 250},
+          {prop: 'position', label: 'Position', minWidth: 200},
+
           {
             prop: 'is_personal',
             label: 'Is Personal',
@@ -155,9 +149,8 @@
           },
           {prop: 'twitter_link', label: 'Twitter Link', minWidth: 250},
           {prop: 'facebook_link', label: 'Facebook Link', minWidth: 250},
-          {prop: 'linkedinLink', label: 'Linkedin Link', minWidth: 250},
+          {prop: 'linkedin_link', label: 'Linkedin Link', minWidth: 250},
           {prop: 'confidence_score', label: 'Confidence Score', minWidth: 200},
-          {prop: 'position', label: 'Position', minWidth: 200},
           {prop: 'email_score', label: 'Email Score', minWidth: 200},
           {prop: 'created', label: 'Created', minWidth: 200},
           {prop: 'last_updated', label: 'Last Updated', minWidth: 200}
@@ -172,7 +165,7 @@
         alert(`Your want to edit ${row.name}`)
       },
       handleDelete (index, row) {
-        let tableData = this.pagedContacts
+        let tableData = this.paged
         const deleteContact = this.deleteContact
         swal({
           title: 'Are you sure?',
@@ -189,16 +182,16 @@
 
           if (indexToDelete >= 0) {
             deleteContact({indexToDelete, contactID})
+            swal({
+              title: 'Deleted!',
+              text: 'Contact has been deleted.',
+              type: 'success',
+              confirmButtonClass: 'btn btn-success btn-fill',
+              buttonsStyling: false
+            })
           }
-
-          swal({
-            title: 'Deleted!',
-            text: 'Contact has been deleted.',
-            type: 'success',
-            confirmButtonClass: 'btn btn-success btn-fill',
-            buttonsStyling: false
-          })
-        }).catch(() => {
+        }).catch(error => {
+          console.log(error)
         })
       },
       handleSelectionChange (val) {
@@ -209,7 +202,7 @@
       }
     },
     created () {
-      this.$store.dispatch('getContacts', {page: 1})
+      this.$store.dispatch('getPagedContacts', {page: 1})
     }
   }
 

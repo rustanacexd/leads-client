@@ -30,12 +30,12 @@ const routes = [
         component: Stats
       },
       {
-        path: 'contacts',
+        path: 'contact',
         name: 'Contacts',
         component: Contacts
       },
       {
-        path: 'contacts/add',
+        path: 'contact/add',
         name: 'Add Contact',
         component: AddContact
       },

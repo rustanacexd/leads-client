@@ -15,7 +15,16 @@ export default [
   {
     name: 'Contacts',
     icon: 'ti-user',
-    path: '/admin/contacts'
+    children: [
+      {
+        name: 'Contacts',
+        path: '/admin/contact'
+      },
+      {
+        name: 'Add Contact',
+        path: '/admin/contact/add'
+      }
+    ]
   },
   {
     name: 'Segments',

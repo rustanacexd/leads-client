@@ -113,7 +113,7 @@
         }
       },
       getData (value) {
-        this.$store.dispatch('getContacts', {
+        this.$store.dispatch('getPagedContacts', {
           page: value
         })
       }
