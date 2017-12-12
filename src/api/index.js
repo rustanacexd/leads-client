@@ -18,16 +18,17 @@ export default {
   },
   fetchAllOrgs: (count) => {
     let orgPromises = []
-    let totalOrganizations = []
 
     for (let i = 2; i <= count / 50; i++) {
       orgPromises.push(instance.get(`/organization/?page=${i}`))
     }
 
     return axios.all(orgPromises).then(results => {
+      let totalOrganizations = []
       results.forEach(response => {
         totalOrganizations = [...totalOrganizations, ...response.data.results]
       })
-    }).then(() => totalOrganizations)
+      return totalOrganizations
+    })
   }
 }
