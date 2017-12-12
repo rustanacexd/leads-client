@@ -11,9 +11,14 @@ export default {
   deleteContact (contactID) {
     return instance.delete(`/contact/${contactID}/`)
   },
+  getContact (contactID) {
+    return instance.get(`/contact/${contactID}/`)
+  },
   addContact (data) {
-    console.log(data)
     return instance.post('/contact/', data)
+  },
+  updateContact (data) {
+    return instance.put(`/contact/${data.id}/`, data)
   },
   getAllOrganizations () {
     return instance.get('/organization/').then(({data: {count, results}}) => {

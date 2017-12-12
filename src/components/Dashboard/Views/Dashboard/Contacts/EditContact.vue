@@ -1,7 +1,8 @@
 <template>
   <div>
     <loading-main-panel :loading="loading"></loading-main-panel>
-    <contact-form @submit.prevent page-title="Add" :is-update="false"></contact-form>
+    <contact-form @submit.prevent page-title="Add" :is-update="true"></contact-form>
+
   </div>
 </template>
 
@@ -17,7 +18,7 @@
       }
     },
     created () {
-      this.$store.commit('SET_CONTACT', {})
+      this.$store.dispatch('getContact', {id: this.$route.params.id})
     }
   }
 </script>

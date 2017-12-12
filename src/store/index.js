@@ -9,7 +9,22 @@ export default new Vuex.Store({
   state: {
     contact: {
       paged: [],
-      total: 0
+      total: 0,
+      contact: {
+        // first_name: '',
+        // last_name: '',
+        // full_name: '',
+        // email: '',
+        // is_personal: false,
+        // twitter_link: '',
+        // facebook_link: '',
+        // linkedin_link: '',
+        // confidence_score: '',
+        // email_score: '',
+        // position: '',
+        // phone: '',
+        // organization: ''
+      }
     },
     organization: {
       all: [],
@@ -18,6 +33,9 @@ export default new Vuex.Store({
     loading: false
   },
   mutations: {
+    'SET_CONTACT' (state, data) {
+      state.contact.contact = data
+    },
     'SET_CONTACTS' (state, data) {
       state.contact.paged = data.results
       state.contact.total = data.count
@@ -45,12 +63,23 @@ export default new Vuex.Store({
           commit('SET_LOADING')
         })
     },
+    getContact ({commit}, {id}) {
+      commit('SET_LOADING')
+      return api.getContact(id).then(({data}) => {
+        commit('SET_CONTACT', data)
+        commit('SET_LOADING')
+      })
+    },
     deleteContact ({commit}, {indexToDelete, contactID}) {
       return api.deleteContact(contactID)
         .then(() => commit('DELETE_CONTACT', indexToDelete))
     },
     addContact ({commit}, data) {
       return api.addContact(data)
+    },
+    updateContact ({commit}, data) {
+      console.log(data)
+      return api.updateContact(data)
     },
     getAllOrganizations ({commit, state}) {
       commit('SET_LOADING')

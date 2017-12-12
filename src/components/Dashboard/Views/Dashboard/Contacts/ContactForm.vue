@@ -3,7 +3,7 @@
     <form class="form-horizontal">
       <div class="card-header">
         <h4 class="card-title">
-          {{pageTitle}}
+          {{pageTitle}} Contact Form
         </h4>
       </div>
       <div class="card-content">
@@ -14,13 +14,13 @@
                 <label class="col-sm-4 control-label">First Name</label>
                 <div class="col-sm-8">
                   <input type="text"
-                         name="firstName"
+                         name="first_name"
                          v-validate="'max:100'"
-                         v-model="model.firstName"
+                         v-model="contact.first_name"
                          data-vv-as="First Name"
                          class="form-control">
-                  <small class="text-danger" v-show="firstName.invalid">
-                    {{ getError('firstName') }}
+                  <small class="text-danger" v-show="first_name.invalid">
+                    {{ getError('first_name') }}
                   </small>
                 </div>
               </div>
@@ -32,13 +32,13 @@
                 <label class="col-sm-4 control-label">Last Name</label>
                 <div class="col-sm-8">
                   <input type="text"
-                         name="lastName"
+                         name="last_name"
                          v-validate="'max:100'"
-                         v-model="model.lastName"
+                         v-model="contact.last_name"
                          data-vv-as="Last Name"
                          class="form-control">
-                  <small class="text-danger" v-show="lastName.invalid">
-                    {{ getError('lastName') }}
+                  <small class="text-danger" v-show="last_name.invalid">
+                    {{ getError('last_name') }}
                   </small>
                 </div>
               </div>
@@ -50,13 +50,13 @@
                 <label class="col-sm-4 control-label">Full Name</label>
                 <div class="col-sm-8">
                   <input type="text"
-                         name="fullName"
+                         name="full_name"
                          v-validate="'max:100'"
-                         v-model="model.fullName"
+                         v-model="contact.full_name"
                          data-vv-as="Full Name"
                          class="form-control">
-                  <small class="text-danger" v-show="fullName.invalid">
-                    {{ getError('fullName') }}
+                  <small class="text-danger" v-show="full_name.invalid">
+                    {{ getError('full_name') }}
                   </small>
                 </div>
               </div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <fieldset>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Email</label>
@@ -73,7 +73,7 @@
                   <input type="text"
                          name="email"
                          v-validate="'required|email'"
-                         v-model="model.email"
+                         v-model="contact.email"
                          data-vv-as="Email"
                          class="form-control">
                   <small class="text-danger" v-show="email.invalid">
@@ -83,7 +83,25 @@
               </div>
             </fieldset>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-3">
+            <fieldset>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Phone Number</label>
+                <div class="col-sm-8">
+                  <input type="text"
+                         name="phone"
+                         v-validate="'max:50'"
+                         v-model="contact.phone"
+                         data-vv-as="Phone number"
+                         class="form-control">
+                  <small class="text-danger" v-show="phone.invalid">
+                    {{ getError('phone') }}
+                  </small>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-sm-3">
             <fieldset>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Position</label>
@@ -91,7 +109,7 @@
                   <input type="text"
                          name="position"
                          v-validate="'max:100'"
-                         v-model="model.position"
+                         v-model="contact.position"
                          data-vv-as="Position"
                          class="form-control">
                   <small class="text-danger" v-show="position.invalid">
@@ -101,12 +119,12 @@
               </div>
             </fieldset>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <fieldset>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Personal</label>
                 <div class="col-sm-8">
-                  <p-switch v-model="model.isPersonal" style="margin-top:8px">
+                  <p-switch v-model="contact.is_personal" style="margin-top:8px">
                     <i class="fa fa-check" slot="on"></i>
                     <i class="fa fa-times" slot="off"></i>
                   </p-switch>
@@ -124,13 +142,13 @@
                 <label class="col-sm-4 control-label">Twitter</label>
                 <div class="col-sm-8">
                   <input type="url"
-                         name="twitterLink"
+                         name="twitter_link"
                          v-validate="'url'"
-                         v-model="model.twitterLink"
+                         v-model="contact.twitter_link"
                          data-vv-as="Twitter Link"
                          class="form-control">
-                  <small class="text-danger" v-show="twitterLink.invalid">
-                    {{ getError('twitterLink') }}
+                  <small class="text-danger" v-show="twitter_link.invalid">
+                    {{ getError('twitter_link') }}
                   </small>
                 </div>
               </div>
@@ -142,13 +160,13 @@
                 <label class="col-sm-4 control-label">Facebook</label>
                 <div class="col-sm-8">
                   <input type="url"
-                         name="facebookLink"
+                         name="facebook_link"
                          v-validate="'url'"
-                         v-model="model.facebookLink"
+                         v-model="contact.facebook_link"
                          data-vv-as="Facebook Link"
                          class="form-control">
-                  <small class="text-danger" v-show="facebookLink.invalid">
-                    {{ getError('facebookLink') }}
+                  <small class="text-danger" v-show="facebook_link.invalid">
+                    {{ getError('facebook_link') }}
                   </small>
                 </div>
               </div>
@@ -160,13 +178,13 @@
                 <label class="col-sm-4 control-label">LinkedIn</label>
                 <div class="col-sm-8">
                   <input type="url"
-                         name="linkedinLink"
+                         name="linkedin_link"
                          v-validate="'url'"
-                         v-model="model.linkedinLink"
+                         v-model="contact.linkedin_link"
                          data-vv-as="LinkedIn"
                          class="form-control">
-                  <small class="text-danger" v-show="linkedinLink.invalid">
-                    {{ getError('linkedinLink') }}
+                  <small class="text-danger" v-show="linkedin_link.invalid">
+                    {{ getError('linkedin_link') }}
                   </small>
                 </div>
               </div>
@@ -181,13 +199,13 @@
                 <label class="col-sm-4 control-label">Confidence Score</label>
                 <div class="col-sm-8">
                   <input type="number"
-                         name="confidenceScore"
+                         name="confidence_score"
                          v-validate="modelValidations.positiveInteger"
-                         v-model="model.confidenceScore"
+                         v-model="contact.confidence_score"
                          data-vv-as="Confidence Score"
                          class="form-control">
-                  <small class="text-danger" v-show="confidenceScore.invalid">
-                    {{ getError('confidenceScore') }}
+                  <small class="text-danger" v-show="confidence_score.invalid">
+                    {{ getError('confidence_score') }}
                   </small>
                 </div>
               </div>
@@ -199,13 +217,13 @@
                 <label class="col-sm-4 control-label">Email Score</label>
                 <div class="col-sm-8">
                   <input type="number"
-                         name="emailScore"
+                         name="email_score"
                          v-validate="modelValidations.positiveInteger"
-                         v-model="model.emailScore"
+                         v-model="contact.email_score"
                          data-vv-as="Email Score"
                          class="form-control">
-                  <small class="text-danger" v-show="emailScore.invalid">
-                    {{ getError('emailScore') }}
+                  <small class="text-danger" v-show="email_score.invalid">
+                    {{ getError('email_score') }}
                   </small>
                 </div>
               </div>
@@ -222,7 +240,7 @@
                   <!--data-vv-as="Organization"-->
                   <!--name="organization"-->
                   <!--placeholder="Single Select"-->
-                  <!--v-model="model.organization">-->
+                  <!--v-model="contact.organization">-->
                   <!--<el-option v-for="organization in organizations"-->
                   <!--class="select-primary"-->
                   <!--:value="organization.id"-->
@@ -233,7 +251,7 @@
                   <input type="number"
                          name="organization"
                          v-validate="'required|numeric'"
-                         v-model="model.organization"
+                         v-model="contact.organization"
                          data-vv-as="Organization"
                          class="form-control">
                   <small class="text-danger" v-show="organization.invalid">
@@ -246,9 +264,21 @@
         </div>
 
       </div>
-      <div class="card-footer text-center">
-        <button type="submit" @click.prevent="validate" class="btn btn-fill btn-info btn-wd">Add Contact</button>
-      </div>
+      <template v-if="isUpdate">
+        <div class="card-footer text-center">
+          <button type="submit" @click.prevent="validate('updateContact')" class="btn btn-fill btn-info btn-wd">Update
+            Contact
+          </button>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="card-footer text-center">
+          <button type="submit" @click.prevent="validate('addContact')" class="btn btn-fill btn-info btn-wd">Add
+            Contact
+          </button>
+        </div>
+      </template>
     </form>
 
   </div>
@@ -262,41 +292,29 @@
     components: {
       PSwitch
     },
-    props: ['pageTitle', 'organizations'],
+    props: ['pageTitle', 'organizations', 'isUpdate'],
     computed: {
       ...mapFields([
-        'firstName',
-        'lastName',
-        'fullName',
+        'first_name',
+        'last_name',
+        'full_name',
         'email',
-        'isPersonal',
-        'twitterLink',
-        'facebookLink',
-        'linkedinLink',
-        'confidenceScore',
-        'emailScore',
+        'is_personal',
+        'twitter_link',
+        'facebook_link',
+        'linkedin_link',
+        'confidence_score',
+        'email_score',
         'position',
-        'number',
+        'phone',
         'organization'
-      ])
+      ]),
+      contact () {
+        return this.$store.state.contact.contact
+      }
     },
     data () {
       return {
-        model: {
-          firstName: '',
-          lastName: '',
-          fullName: '',
-          email: '',
-          isPersonal: false,
-          twitterLink: '',
-          facebookLink: '',
-          linkedinLink: '',
-          confidenceScore: '',
-          emailScore: '',
-          position: '',
-          number: '',
-          organization: ''
-        },
         modelValidations: {
           positiveInteger: {
             numeric: true,
@@ -309,26 +327,27 @@
       getError (fieldName) {
         return this.errors.first(fieldName)
       },
-      validate () {
+      validate (actionName) {
         this.$validator.validateAll().then(isValid => {
           if (isValid) {
-            this.$store.dispatch('addContact', {
-              first_name: this.model.firstName,
-              last_name: this.model.lastName,
-              full_name: this.model.fullName,
-              email: this.model.email,
-              is_personal: this.model.isPersonal,
-              twitter_link: this.model.twitterLink,
-              facebook_link: this.model.facebookLink,
-              linkedin_link: this.model.linkedinLink,
-              confidence_score: this.model.confidenceScore || null,
-              email_score: this.model.emailScore || null,
-              position: this.model.position,
-              organization: Number.parseInt(this.model.organization)
+            this.$store.dispatch(actionName, {
+              id: this.contact.id,
+              first_name: this.contact.first_name,
+              last_name: this.contact.last_name,
+              full_name: this.contact.full_name,
+              email: this.contact.email,
+              is_personal: this.contact.is_personal,
+              twitter_link: this.contact.twitter_link,
+              facebook_link: this.contact.facebook_link,
+              linkedin_link: this.contact.linkedin_link,
+              confidence_score: this.contact.confidence_score || null,
+              email_score: this.contact.email_score || null,
+              position: this.contact.position,
+              phone: this.contact.phone,
+              organization: Number.parseInt(this.contact.organization)
             }).then(
               swal({
                 title: `Success!`,
-                text: 'successfully added contact',
                 buttonsStyling: false,
                 confirmButtonClass: 'btn btn-success btn-fill',
                 type: 'success'

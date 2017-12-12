@@ -140,6 +140,7 @@
           {prop: 'full_name', label: 'Full Name', minWidth: 250},
           {prop: 'organization', label: 'Organization', minWidth: 250},
           {prop: 'email', label: 'Email', minWidth: 250},
+          {prop: 'phone', label: 'Number', minWidth: 250},
           {prop: 'position', label: 'Position', minWidth: 200},
           {prop: 'twitter_link', label: 'Twitter Link', minWidth: 250},
           {prop: 'facebook_link', label: 'Facebook Link', minWidth: 250},
@@ -176,7 +177,7 @@
           })
       },
       handleEdit (index, row) {
-        alert(`Your want to edit ${row.name}`)
+        this.$router.push({name: 'Edit Contact', params: {id: row.id}})
       },
       handleDelete (index, row) {
         let tableData = this.paged
@@ -203,7 +204,6 @@
         this.multipleSelection = val
       },
       filterTag (value, row) {
-        console.log(row.is_personal)
         return row.is_personal === value
       }
     },

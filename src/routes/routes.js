@@ -6,6 +6,7 @@ import Overview from 'src/components/Dashboard/Views/Dashboard/Overview.vue'
 import Stats from 'src/components/Dashboard/Views/Dashboard/Stats.vue'
 import Contacts from 'src/components/Dashboard/Views/Dashboard/Contacts/Contacts.vue'
 import AddContact from 'src/components/Dashboard/Views/Dashboard/Contacts/AddContact.vue'
+import EditContact from 'src/components/Dashboard/Views/Dashboard/Contacts/EditContact.vue'
 import Segments from 'src/components/Dashboard/Views/Dashboard/Segments.vue'
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
         path: 'contact/add',
         name: 'Add Contact',
         component: AddContact
+      },
+      {
+        path: 'contact/edit/:id',
+        name: 'Edit Contact',
+        component: EditContact
       },
       {
         path: 'segments',
