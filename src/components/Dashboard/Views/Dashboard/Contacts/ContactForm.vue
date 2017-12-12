@@ -214,21 +214,30 @@
           <div class="col-sm-4">
             <fieldset>
               <div class="form-group">
-                <label class="col-sm-4 control-label">Organization</label>
+                <label class="col-sm-4 control-label">Organization ID</label>
                 <div class="col-sm-8">
-                  <el-select class="select-primary"
-                             size="large"
-                             placeholder="Single Select"
-                             v-model="selects.simple">
-                    <el-option v-for="option in selects.countries"
-                               class="select-primary"
-                               :value="option.value"
-                               :label="option.label"
-                               :key="option.label">
-                    </el-option>
-                  </el-select>
-                  <small class="text-danger" v-show="email_score.invalid">
-                    {{ getError('email_score') }}
+                  <!--<el-select class="select-primary"-->
+                             <!--size="large"-->
+                             <!--v-validate="'required|numeric'"-->
+                             <!--data-vv-as="Organization"-->
+                             <!--name="organization"-->
+                             <!--placeholder="Single Select"-->
+                             <!--v-model="model.organization">-->
+                    <!--<el-option v-for="organization in organizations"-->
+                               <!--class="select-primary"-->
+                               <!--:value="organization.id"-->
+                               <!--:label="organization.id"-->
+                               <!--:key="organization.id">-->
+                    <!--</el-option>-->
+                  <!--</el-select>-->
+                  <input type="number"
+                         name="organization"
+                         v-validate="'required|numeric'"
+                         v-model="model.organization"
+                         data-vv-as="Organization"
+                         class="form-control">
+                  <small class="text-danger" v-show="organization.invalid">
+                    {{ getError('organization') }}
                   </small>
                 </div>
               </div>
@@ -252,7 +261,7 @@
     components: {
       PSwitch
     },
-    props: ['pageTitle'],
+    props: ['pageTitle', 'organizations'],
     computed: {
       ...mapFields([
         'first_name',
@@ -266,17 +275,12 @@
         'confidence_score',
         'email_score',
         'position',
-        'number'
+        'number',
+        'organization'
       ])
     },
     data () {
       return {
-        selects: {
-          simple: '',
-          countries: [{value: 'Bahasa Indonesia', label: 'Bahasa Indonesia'},
-            {value: 'Bahasa Melayu', label: 'Bahasa Melayu'},
-            {value: 'Català', label: 'Català'}]
-        },
         model: {
           first_name: '',
           last_name: '',
@@ -289,7 +293,8 @@
           confidence_score: '',
           email_score: '',
           position: '',
-          number: ''
+          number: '',
+          organization: ''
         },
         modelValidations: {
           positiveInteger: {

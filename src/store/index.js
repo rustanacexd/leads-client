@@ -12,6 +12,7 @@ export default new Vuex.Store({
       total: 0
     },
     organization: {
+      all: [],
       total: 0
     },
     loading: false
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     'SET_LOADING' (state) {
       state.loading = !state.loading
+    },
+    'SET_ORGS' (state, data) {
+      state.organization.all = data
     },
     'SET_TOTAL_ORG_COUNT' (state, count) {
       state.organization.total = count
@@ -55,13 +59,14 @@ export default new Vuex.Store({
         let totalOrganizations = [...results]
 
         if (state.contact.total !== count) {
-          totalOrganizations += api.fetchAllOrgs(count)
+          api.fetchAllOrgs(count).then(results => {
+            totalOrganizations = [...totalOrganizations, ...results]
+            commit('SET_ORGS', totalOrganizations)
+          })
         }
 
         commit('SET_TOTAL_ORG_COUNT', count)
         commit('SET_LOADING')
-
-        return totalOrganizations
       })
     }
   }

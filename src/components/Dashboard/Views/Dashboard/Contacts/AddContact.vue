@@ -25,9 +25,6 @@
       onAddContactSubmit (model, isValid) {
         this.contactModel = model
       }
-    },
-    created () {
-      this.$store.dispatch('getAllOrganizations')
     }
   }
 </script>

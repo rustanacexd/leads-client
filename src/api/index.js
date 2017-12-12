@@ -24,7 +24,7 @@ export default {
       orgPromises.push(instance.get(`/organization/?page=${i}`))
     }
 
-    axios.all(orgPromises).then(results => {
+    return axios.all(orgPromises).then(results => {
       results.forEach(response => {
         totalOrganizations = [...totalOrganizations, ...response.data.results]
       })
