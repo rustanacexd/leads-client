@@ -2,12 +2,6 @@
   <div class="row">
     <loading-main-panel :loading="loading"></loading-main-panel>
     <div class="col-md-12">
-      <h4 class="title">Lorem ipsum dolor sit.</h4>
-      <p class="category">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium adipisci aliquam assumenda, aut
-        deleniti dolore doloremque dolores doloribus eligendi eveniet expedita ipsum labore laudantium nemo, nihil
-        quidem quod, veniam.
-      </p>
       <div class="row" style="margin-bottom: 20px">
         <div class="col-lg-6 col-lg-offset-6">
           <div class="pull-right">
@@ -160,6 +154,26 @@
     methods: {
       deleteContact ({indexToDelete, contactID}) {
         this.$store.dispatch('deleteContact', {contactID, indexToDelete})
+          .then(
+            swal({
+              title: 'Deleted!',
+              text: 'Contact has been deleted.',
+              type: 'success',
+              confirmButtonClass: 'btn btn-success btn-fill',
+              buttonsStyling: false
+            })
+          )
+          .catch(error => {
+            if (error.message) {
+              swal({
+                title: 'Error',
+                text: error.message,
+                type: 'error',
+                buttonsStyling: false,
+                confirmButtonClass: 'btn btn-danger btn-fill'
+              })
+            }
+          })
       },
       handleEdit (index, row) {
         alert(`Your want to edit ${row.name}`)
@@ -182,17 +196,8 @@
 
           if (indexToDelete >= 0) {
             deleteContact({indexToDelete, contactID})
-            swal({
-              title: 'Deleted!',
-              text: 'Contact has been deleted.',
-              type: 'success',
-              confirmButtonClass: 'btn btn-success btn-fill',
-              buttonsStyling: false
-            })
           }
-        }).catch(error => {
-          console.log(error)
-        })
+        }).catch(error => console.log(error))
       },
       handleSelectionChange (val) {
         this.multipleSelection = val

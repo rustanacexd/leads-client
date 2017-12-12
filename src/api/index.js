@@ -5,18 +5,22 @@ let instance = axios.create({
 })
 
 export default {
-  getPagedContacts: (page) => {
+  getPagedContacts (page) {
     return instance.get(`/contact/?page=${page}`)
   },
-  deleteContact: (contactID) => {
+  deleteContact (contactID) {
     return instance.delete(`/contact/${contactID}/`)
   },
-  getAllOrganizations: () => {
+  addContact (data) {
+    console.log(data)
+    return instance.post('/contact/', data)
+  },
+  getAllOrganizations () {
     return instance.get('/organization/').then(({data: {count, results}}) => {
       return {count, results}
     })
   },
-  fetchAllOrgs: (count) => {
+  fetchAllOrgs (count) {
     let orgPromises = []
 
     for (let i = 2; i <= count / 50; i++) {

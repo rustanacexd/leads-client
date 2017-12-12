@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading-main-panel :loading="loading"></loading-main-panel>
-    <contact-form @on-submit="onAddContactSubmit" page-title="Add Contact Form"></contact-form>
+    <contact-form @submit.prevent page-title="Add Contact Form"></contact-form>
   </div>
 </template>
 
@@ -19,11 +19,6 @@
     data () {
       return {
         contactModel: {}
-      }
-    },
-    methods: {
-      onAddContactSubmit (model, isValid) {
-        this.contactModel = model
       }
     }
   }

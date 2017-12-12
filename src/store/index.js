@@ -44,14 +44,13 @@ export default new Vuex.Store({
           commit('SET_CONTACTS', response.data)
           commit('SET_LOADING')
         })
-        .catch(error => console.log(error))
     },
     deleteContact ({commit}, {indexToDelete, contactID}) {
       return api.deleteContact(contactID)
         .then(() => commit('DELETE_CONTACT', indexToDelete))
-        .catch(error => {
-          console.log(error)
-        })
+    },
+    addContact ({commit}, data) {
+      return api.addContact(data)
     },
     getAllOrganizations ({commit, state}) {
       commit('SET_LOADING')
