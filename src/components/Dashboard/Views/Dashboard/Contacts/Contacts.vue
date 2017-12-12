@@ -50,14 +50,23 @@
               type="selection"
               width="55">
             </el-table-column>
+            <el-table-column
+              label="Personal"
+              :filter-method="filterTag"
+              :filters="[{text: 'True', value: true}, {text: 'False', value: false}]"
+              filter-placement="bottom-end"
+              prop="is_personal"
+              min-width="150"
+            >
+              <template slot-scope="props">
+                {{props.row.is_personal}}
+              </template>
+            </el-table-column>
             <el-table-column v-for="column in tableColumns"
                              :key="column.label"
                              :min-width="column.minWidth"
                              :prop="column.prop"
                              :label="column.label"
-                             :filter-method="column.filterMethod"
-                             :filters="column.filters"
-                             :filter-placement="column.filterPlacement"
                              sortable>
             </el-table-column>
             <el-table-column
@@ -132,15 +141,6 @@
           {prop: 'organization', label: 'Organization', minWidth: 250},
           {prop: 'email', label: 'Email', minWidth: 250},
           {prop: 'position', label: 'Position', minWidth: 200},
-
-          {
-            prop: 'is_personal',
-            label: 'Is Personal',
-            minWidth: 200,
-            filters: [{text: 'True', value: 'True'}, {text: 'False', value: 'False'}],
-            filterMethod: this.filterTag,
-            filterPlacement: 'bottom-end'
-          },
           {prop: 'twitter_link', label: 'Twitter Link', minWidth: 250},
           {prop: 'facebook_link', label: 'Facebook Link', minWidth: 250},
           {prop: 'linkedin_link', label: 'Linkedin Link', minWidth: 250},
@@ -203,7 +203,8 @@
         this.multipleSelection = val
       },
       filterTag (value, row) {
-        return row.isPersonal === value
+        console.log(row.is_personal)
+        return row.is_personal === value
       }
     },
     created () {
