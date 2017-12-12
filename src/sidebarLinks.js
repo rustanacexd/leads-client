@@ -15,10 +15,11 @@ export default [
   {
     name: 'Contacts',
     icon: 'ti-user',
+    collapsed: false,
     children: [
       {
         name: 'Contacts',
-        path: '/admin/contact'
+        path: '/admin/contacts'
       },
       {
         name: 'Add Contact',
