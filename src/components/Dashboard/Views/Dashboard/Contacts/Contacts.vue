@@ -24,7 +24,8 @@
         <div class="col-sm-6">
           <div class="pull-right">
             <label>
-              <input type="search" class="form-control input-sm" placeholder="Search contact" v-model="searchQuery"
+              <input type="search" class="form-control input-sm" placeholder="Search contact"
+                     v-model.lazy="searchString"
                      aria-controls="datatables">
             </label>
           </div>
@@ -109,6 +110,25 @@
         loading: state => state.loading,
         paged: state => state.contact.paged
       }),
+      searchString: {
+        get () {
+          return this.$store.state.contact.searchString
+        },
+        set (searchKey) {
+          this.$store.dispatch('searchContact', {searchKey})
+            .catch(error => {
+              if (error.message) {
+                swal({
+                  title: 'Error',
+                  text: error.message,
+                  type: 'error',
+                  buttonsStyling: false,
+                  confirmButtonClass: 'btn btn-danger btn-fill'
+                })
+              }
+            })
+        }
+      },
       to () {
         let highBound = this.from + this.pagination.perPage
         if (this.total < highBound) {

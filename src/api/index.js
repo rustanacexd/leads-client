@@ -20,6 +20,9 @@ export default {
   updateContact (data) {
     return instance.put(`/contact/${data.id}/`, data)
   },
+  searchContact (searchKey) {
+    return instance.get(`/contact?search=${searchKey}`)
+  },
   getAllOrganizations () {
     return instance.get('/organization/').then(({data: {count, results}}) => {
       return {count, results}

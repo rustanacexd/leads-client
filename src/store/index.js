@@ -24,7 +24,8 @@ export default new Vuex.Store({
         // position: '',
         // phone: '',
         // organization: ''
-      }
+      },
+      searchString: ''
     },
     organization: {
       all: [],
@@ -52,6 +53,9 @@ export default new Vuex.Store({
     },
     'SET_TOTAL_ORG_COUNT' (state, count) {
       state.organization.total = count
+    },
+    'SET_CONTACT_SEARCH_STRING' (state, data) {
+      state.contact.searchString = data
     }
   },
   actions: {
@@ -60,6 +64,7 @@ export default new Vuex.Store({
       api.getPagedContacts(page)
         .then(response => {
           commit('SET_CONTACTS', response.data)
+          commit('SET_CONTACT_SEARCH_STRING', '')
           commit('SET_LOADING')
         })
     },
@@ -75,11 +80,21 @@ export default new Vuex.Store({
         .then(() => commit('DELETE_CONTACT', indexToDelete))
     },
     addContact ({commit}, data) {
-      return api.addContact(data)
+      return api.addContact(data).then(() => {
+        commit('SET_CONTACT', {})
+      })
     },
     updateContact ({commit}, data) {
-      console.log(data)
       return api.updateContact(data)
+    },
+    searchContact ({commit, state}, {searchKey}) {
+      commit('SET_CONTACT_SEARCH_STRING', searchKey)
+      commit('SET_LOADING')
+      return api.searchContact(searchKey)
+        .then(response => {
+          commit('SET_CONTACTS', response.data)
+          commit('SET_LOADING')
+        })
     },
     getAllOrganizations ({commit, state}) {
       commit('SET_LOADING')
