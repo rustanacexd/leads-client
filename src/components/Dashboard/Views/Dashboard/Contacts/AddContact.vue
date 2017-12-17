@@ -17,7 +17,7 @@
       }
     },
     created () {
-      this.$store.commit('SET_CONTACT', {})
+      this.$store.commit('SET_RESOURCE', {data: {}, resourceName: 'contact'})
     }
   }
 </script>

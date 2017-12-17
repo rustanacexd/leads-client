@@ -38,6 +38,9 @@
       value: {
         type: Number,
         default: 1
+      },
+      resourceName: {
+        type: String
       }
     },
     computed: {
@@ -113,8 +116,9 @@
         }
       },
       getData (value) {
-        this.$store.dispatch('getPagedContacts', {
-          page: value
+        this.$store.dispatch('getPagedResources', {
+          page: value,
+          resourceName: this.resourceName
         })
       }
     },

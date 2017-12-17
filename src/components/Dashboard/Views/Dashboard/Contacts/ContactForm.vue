@@ -266,7 +266,7 @@
       </div>
       <template v-if="isUpdate">
         <div class="card-footer text-center">
-          <button type="submit" @click.prevent="validate('updateContact')" class="btn btn-fill btn-info btn-wd">Update
+          <button type="submit" @click.prevent="validate('updateResource')" class="btn btn-fill btn-info btn-wd">Update
             Contact
           </button>
         </div>
@@ -274,7 +274,7 @@
 
       <template v-else>
         <div class="card-footer text-center">
-          <button type="submit" @click.prevent="validate('addContact')" class="btn btn-fill btn-info btn-wd">Add
+          <button type="submit" @click.prevent="validate('addResource')" class="btn btn-fill btn-info btn-wd">Add
             Contact
           </button>
         </div>
@@ -331,20 +331,23 @@
         this.$validator.validateAll().then(isValid => {
           if (isValid) {
             this.$store.dispatch(actionName, {
-              id: this.contact.id,
-              first_name: this.contact.first_name,
-              last_name: this.contact.last_name,
-              full_name: this.contact.full_name,
-              email: this.contact.email,
-              is_personal: this.contact.is_personal,
-              twitter_link: this.contact.twitter_link,
-              facebook_link: this.contact.facebook_link,
-              linkedin_link: this.contact.linkedin_link,
-              confidence_score: this.contact.confidence_score || null,
-              email_score: this.contact.email_score || null,
-              position: this.contact.position,
-              phone: this.contact.phone,
-              organization: Number.parseInt(this.contact.organization)
+              data: {
+                id: this.contact.id,
+                first_name: this.contact.first_name,
+                last_name: this.contact.last_name,
+                full_name: this.contact.full_name,
+                email: this.contact.email,
+                is_personal: this.contact.is_personal,
+                twitter_link: this.contact.twitter_link,
+                facebook_link: this.contact.facebook_link,
+                linkedin_link: this.contact.linkedin_link,
+                confidence_score: this.contact.confidence_score || null,
+                email_score: this.contact.email_score || null,
+                position: this.contact.position,
+                phone: this.contact.phone,
+                organization: Number.parseInt(this.contact.organization)
+              },
+              resourceName: 'contact'
             }).then(
               swal({
                 title: `Success!`,

@@ -1,27 +1,27 @@
 import axios from 'axios'
 
 let instance = axios.create({
-  baseURL: 'http://leads-api.dev:9000'
+  baseURL: 'http://leads-api.local:9000'
 })
 
 export default {
-  getPagedContacts (page) {
-    return instance.get(`/contact/?page=${page}`)
+  getPagedResources (page, resourceName) {
+    return instance.get(`/${resourceName}/?page=${page}`)
   },
-  deleteContact (contactID) {
-    return instance.delete(`/contact/${contactID}/`)
+  deleteResource (resourceID, resourceName) {
+    return instance.delete(`/${resourceName}/${resourceID}/`)
   },
-  getContact (contactID) {
-    return instance.get(`/contact/${contactID}/`)
+  getResource (resourceID, resourceName) {
+    return instance.get(`/${resourceName}/${resourceID}/`)
   },
-  addContact (data) {
-    return instance.post('/contact/', data)
+  addResource (data, resourceName) {
+    return instance.post(`/${resourceName}/`, data)
   },
-  updateContact (data) {
-    return instance.put(`/contact/${data.id}/`, data)
+  updateResource (data, resourceName) {
+    return instance.put(`/${resourceName}/${data.id}/`, data)
   },
-  searchContact (searchKey) {
-    return instance.get(`/contact?search=${searchKey}`)
+  searchResource (searchKey, resourceName) {
+    return instance.get(`/${resourceName}?search=${searchKey}`)
   },
   getAllOrganizations () {
     return instance.get('/organization/').then(({data: {count, results}}) => {

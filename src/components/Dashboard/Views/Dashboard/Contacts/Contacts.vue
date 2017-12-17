@@ -36,6 +36,7 @@
         <div class="col-sm-6">
           <p-pagination class="pull-right"
                         v-model="pagination.currentPage"
+                        :resource-name="resourceName"
                         :per-page="pagination.perPage"
                         :total="pagination.total">
           </p-pagination>
@@ -108,14 +109,16 @@
     computed: {
       ...mapState({
         loading: state => state.loading,
-        paged: state => state.contact.paged
+        paged (state) {
+          return state[this.resourceName].paged
+        }
       }),
       searchString: {
         get () {
-          return this.$store.state.contact.searchString
+          return this.$store.state[this.resourceName].searchString
         },
         set (searchKey) {
-          this.$store.dispatch('searchContact', {searchKey})
+          this.$store.dispatch('searchResource', {searchKey, resourceName: this.resourceName})
             .catch(error => {
               if (error.message) {
                 swal({
@@ -140,12 +143,13 @@
         return this.pagination.perPage * (this.pagination.currentPage - 1)
       },
       total () {
-        this.pagination.total = this.$store.state.contact.total
-        return this.$store.state.contact.total
+        this.pagination.total = this.$store.state[this.resourceName].total
+        return this.$store.state[this.resourceName].total
       }
     },
     data () {
       return {
+        resourceName: 'contact',
         pagination: {
           perPage: 50,
           currentPage: 1,
@@ -173,12 +177,16 @@
       }
     },
     methods: {
-      deleteContact ({indexToDelete, contactID}) {
-        this.$store.dispatch('deleteContact', {contactID, indexToDelete})
+      deleteResource ({indexToDelete, resourceID}) {
+        this.$store.dispatch('deleteResource', {
+          resourceID,
+          indexToDelete,
+          resourceName: this.resourceName
+        })
           .then(
             swal({
               title: 'Deleted!',
-              text: 'Contact has been deleted.',
+              text: 'Item has been deleted.',
               type: 'success',
               confirmButtonClass: 'btn btn-success btn-fill',
               buttonsStyling: false
@@ -201,7 +209,7 @@
       },
       handleDelete (index, row) {
         let tableData = this.paged
-        const deleteContact = this.deleteContact
+        const deleteResource = this.deleteResource
         swal({
           title: 'Are you sure?',
           text: `You won't be able to revert this!`,
@@ -213,10 +221,10 @@
           buttonsStyling: false
         }).then(function () {
           let indexToDelete = tableData.findIndex((tableRow) => tableRow.id === row.id)
-          const contactID = tableData[indexToDelete].id
+          const resourceID = tableData[indexToDelete].id
 
           if (indexToDelete >= 0) {
-            deleteContact({indexToDelete, contactID})
+            deleteResource({indexToDelete, resourceID})
           }
         }).catch(error => console.log(error))
       },
@@ -228,7 +236,10 @@
       }
     },
     created () {
-      this.$store.dispatch('getPagedContacts', {page: 1})
+      this.$store.dispatch('getPagedResources', {
+        page: 1,
+        resourceName: this.resourceName
+      })
     }
   }
 

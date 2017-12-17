@@ -18,7 +18,10 @@
       }
     },
     created () {
-      this.$store.dispatch('getContact', {id: this.$route.params.id})
+      this.$store.dispatch('getResource', {
+        id: this.$route.params.id,
+        resourceName: 'contact'
+      })
     }
   }
 </script>

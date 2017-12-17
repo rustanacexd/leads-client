@@ -34,16 +34,16 @@ export default new Vuex.Store({
     loading: false
   },
   mutations: {
-    'SET_CONTACT' (state, data) {
-      state.contact.contact = data
+    'SET_RESOURCE' (state, {data, resourceName}) {
+      state[resourceName][resourceName] = data
     },
-    'SET_CONTACTS' (state, data) {
-      state.contact.paged = data.results
-      state.contact.total = data.count
+    'SET_RESOURCES' (state, {data, resourceName}) {
+      state[resourceName].paged = data.results
+      state[resourceName].total = data.count
     },
-    'DELETE_CONTACT' (state, contact) {
-      state.contact.paged.splice(contact, 1)
-      state.contact.total -= 1
+    'DELETE_RESOURCE' (state, {indexToDelete, resourceName}) {
+      state[resourceName].paged.splice(indexToDelete, 1)
+      state[resourceName].total -= 1
     },
     'SET_LOADING' (state) {
       state.loading = !state.loading
@@ -54,45 +54,45 @@ export default new Vuex.Store({
     'SET_TOTAL_ORG_COUNT' (state, count) {
       state.organization.total = count
     },
-    'SET_CONTACT_SEARCH_STRING' (state, data) {
-      state.contact.searchString = data
+    'SET_RESOURCE_SEARCH_STRING' (state, {searchKey, resourceName}) {
+      state[resourceName].searchString = searchKey
     }
   },
   actions: {
-    getPagedContacts ({commit}, {page}) {
+    getPagedResources ({commit}, {page, resourceName}) {
       commit('SET_LOADING')
-      api.getPagedContacts(page)
-        .then(response => {
-          commit('SET_CONTACTS', response.data)
-          commit('SET_CONTACT_SEARCH_STRING', '')
+      api.getPagedResources(page, resourceName)
+        .then(({data}) => {
+          commit('SET_RESOURCES', {data, resourceName})
+          commit('SET_RESOURCE_SEARCH_STRING', {searchKey: '', resourceName})
           commit('SET_LOADING')
         })
     },
-    getContact ({commit}, {id}) {
+    getResource ({commit}, {id, resourceName}) {
       commit('SET_LOADING')
-      return api.getContact(id).then(({data}) => {
-        commit('SET_CONTACT', data)
+      return api.getResource(id, resourceName).then(({data}) => {
+        commit('SET_RESOURCE', {data, resourceName})
         commit('SET_LOADING')
       })
     },
-    deleteContact ({commit}, {indexToDelete, contactID}) {
-      return api.deleteContact(contactID)
-        .then(() => commit('DELETE_CONTACT', indexToDelete))
+    deleteResource ({commit}, {indexToDelete, resourceID, resourceName}) {
+      return api.deleteResource(resourceID, resourceName)
+        .then(() => commit('DELETE_RESOURCE', {indexToDelete, resourceName}))
     },
-    addContact ({commit}, data) {
-      return api.addContact(data).then(() => {
-        commit('SET_CONTACT', {})
+    addResource ({commit}, {data, resourceName}) {
+      return api.addResource(data, resourceName).then(() => {
+        commit('SET_RESOURCE', {data: {}, resourceName})
       })
     },
-    updateContact ({commit}, data) {
-      return api.updateContact(data)
+    updateResource ({commit}, {data, resourceName}) {
+      return api.updateResource(data, resourceName)
     },
-    searchContact ({commit, state}, {searchKey}) {
-      commit('SET_CONTACT_SEARCH_STRING', searchKey)
+    searchResource ({commit}, {searchKey, resourceName}) {
+      commit('SET_RESOURCE_SEARCH_STRING', {searchKey, resourceName})
       commit('SET_LOADING')
-      return api.searchContact(searchKey)
-        .then(response => {
-          commit('SET_CONTACTS', response.data)
+      return api.searchResource(searchKey, resourceName)
+        .then(({data}) => {
+          commit('SET_RESOURCES', {data, resourceName})
           commit('SET_LOADING')
         })
     },
