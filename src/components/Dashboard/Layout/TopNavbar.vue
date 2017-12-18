@@ -16,12 +16,6 @@
         <a class="navbar-brand">{{this.$route.name}}</a>
       </div>
       <div class="collapse navbar-collapse">
-        <form class="navbar-form navbar-left navbar-search-form" role="search">
-          <div class="input-group">
-            <input type="text" value="" class="form-control" placeholder="Search...">
-            <span class="input-group-addon"><i class="fa fa-search"></i></span>
-          </div>
-        </form>
         <ul class="nav navbar-nav navbar-right">
           <li>
             <router-link to="/admin/overview" class="btn-rotate">

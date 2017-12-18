@@ -6,7 +6,7 @@
         <div class="col-lg-6 col-lg-offset-6">
           <div class="pull-right">
             <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add ' + resourceName})">Add new
-              Contact
+              {{resourceName}}
             </button>
             <button class="btn btn-primary btn-fill btn-wd">Import</button>
             <button class="btn btn-primary btn-fill btn-wd">Export</button>
@@ -46,7 +46,10 @@
                     style="width: 100%"
                     @selection-change="handleSelectionChange">
             <slot name="select_field"></slot>
+            <slot name="id"></slot>
             <slot name="is_personal"></slot>
+            <slot name="client"></slot>
+            <slot name="organization"></slot>
             <el-table-column v-for="column in tableColumns"
                              :key="column.label"
                              :min-width="column.minWidth"
@@ -89,7 +92,7 @@
       PPagination,
       LoadingMainPanel
     },
-    props: ['resourceName', 'tableColumns', 'propsToSearch'],
+    props: ['resourceName', 'tableColumns'],
     computed: {
       ...mapState({
         loading: state => state.loading,

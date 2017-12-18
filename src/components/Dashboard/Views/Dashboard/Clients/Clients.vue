@@ -1,7 +1,6 @@
 <template>
   <resource-list-table :resource-name="resourceName"
                        :table-columns="tableColumns"
-                       :props-to-search="propsToSearch"
   ></resource-list-table>
 </template>
 <script>
@@ -14,10 +13,10 @@
     data () {
       return {
         resourceName: 'client',
-        propsToSearch: ['name', 'remote_key'],
         tableColumns: [
-          {prop: 'name', label: 'Name', minWidth: 250},
-          {prop: 'remote_key', label: 'Remote Key', minWidth: 250}
+          {prop: 'id', label: 'ID', minWidth: 25},
+          {prop: 'name', label: 'Name', minWidth: 100},
+          {prop: 'remote_key', label: 'Remote Key', minWidth: 100}
         ]
       }
     }

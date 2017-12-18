@@ -10,6 +10,9 @@ import EditContact from 'src/components/Dashboard/Views/Dashboard/Contacts/EditC
 import Clients from 'src/components/Dashboard/Views/Dashboard/Clients/Clients.vue'
 import AddClient from 'src/components/Dashboard/Views/Dashboard/Clients/AddClient.vue'
 import EditClient from 'src/components/Dashboard/Views/Dashboard/Clients/EditClient.vue'
+import Organizations from 'src/components/Dashboard/Views/Dashboard/Organizations/Organizations.vue'
+import AddOrganization from 'src/components/Dashboard/Views/Dashboard/Organizations/AddOrganization.vue'
+import EditOrganization from 'src/components/Dashboard/Views/Dashboard/Organizations/EditOrganization.vue'
 import Segments from 'src/components/Dashboard/Views/Dashboard/Segments.vue'
 
 const routes = [
@@ -62,6 +65,21 @@ const routes = [
         path: 'client/edit/:id',
         name: 'Edit client',
         component: EditClient
+      },
+      {
+        path: 'organizations',
+        name: 'Organizations',
+        component: Organizations
+      },
+      {
+        path: 'organization/add',
+        name: 'Add organization',
+        component: AddOrganization
+      },
+      {
+        path: 'organization/edit/:id',
+        name: 'Edit organization',
+        component: EditOrganization
       },
       {
         path: 'segments',

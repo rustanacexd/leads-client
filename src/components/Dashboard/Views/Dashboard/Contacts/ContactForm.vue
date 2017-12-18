@@ -234,25 +234,11 @@
               <div class="form-group">
                 <label class="col-sm-4 control-label">Organization ID</label>
                 <div class="col-sm-8">
-                  <!--<el-select class="select-primary"-->
-                  <!--size="large"-->
-                  <!--v-validate="'required|numeric'"-->
-                  <!--data-vv-as="Organization"-->
-                  <!--name="organization"-->
-                  <!--placeholder="Single Select"-->
-                  <!--v-model="contact.organization">-->
-                  <!--<el-option v-for="organization in organizations"-->
-                  <!--class="select-primary"-->
-                  <!--:value="organization.id"-->
-                  <!--:label="organization.id"-->
-                  <!--:key="organization.id">-->
-                  <!--</el-option>-->
-                  <!--</el-select>-->
                   <input type="number"
                          name="organization"
                          v-validate="'required|numeric'"
                          v-model="contact.organization"
-                         data-vv-as="Organization"
+                         data-vv-as="Organization ID"
                          class="form-control">
                   <small class="text-danger" v-show="organization.invalid">
                     {{ getError('organization') }}
