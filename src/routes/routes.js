@@ -7,6 +7,9 @@ import Stats from 'src/components/Dashboard/Views/Dashboard/Stats.vue'
 import Contacts from 'src/components/Dashboard/Views/Dashboard/Contacts/Contacts.vue'
 import AddContact from 'src/components/Dashboard/Views/Dashboard/Contacts/AddContact.vue'
 import EditContact from 'src/components/Dashboard/Views/Dashboard/Contacts/EditContact.vue'
+import Clients from 'src/components/Dashboard/Views/Dashboard/Clients/Clients.vue'
+import AddClient from 'src/components/Dashboard/Views/Dashboard/Clients/AddClient.vue'
+import EditClient from 'src/components/Dashboard/Views/Dashboard/Clients/EditClient.vue'
 import Segments from 'src/components/Dashboard/Views/Dashboard/Segments.vue'
 
 const routes = [
@@ -44,6 +47,21 @@ const routes = [
         path: 'contact/edit/:id',
         name: 'Edit contact',
         component: EditContact
+      },
+      {
+        path: 'clients',
+        name: 'Clients',
+        component: Clients
+      },
+      {
+        path: 'client/add',
+        name: 'Add client',
+        component: AddClient
+      },
+      {
+        path: 'client/edit/:id',
+        name: 'Edit client',
+        component: EditClient
       },
       {
         path: 'segments',

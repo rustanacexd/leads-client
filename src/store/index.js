@@ -27,6 +27,15 @@ export default new Vuex.Store({
       },
       searchString: ''
     },
+    client: {
+      paged: [],
+      total: 0,
+      client: {
+        // name: '',
+        // remote_key: '',
+      },
+      searchString: ''
+    },
     organization: {
       all: [],
       total: 0

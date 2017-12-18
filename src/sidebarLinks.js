@@ -15,7 +15,6 @@ export default [
   {
     name: 'Contacts',
     icon: 'ti-user',
-    collapsed: false,
     children: [
       {
         name: 'Contacts',
@@ -24,6 +23,20 @@ export default [
       {
         name: 'Add Contact',
         path: '/admin/contact/add'
+      }
+    ]
+  },
+  {
+    name: 'Clients',
+    icon: 'ti-user',
+    children: [
+      {
+        name: 'Clients',
+        path: '/admin/clients'
+      },
+      {
+        name: 'Add Client',
+        path: '/admin/client/add'
       }
     ]
   },

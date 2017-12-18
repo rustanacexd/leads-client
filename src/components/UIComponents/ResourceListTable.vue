@@ -45,22 +45,8 @@
                     border
                     style="width: 100%"
                     @selection-change="handleSelectionChange">
-            <el-table-column
-              type="selection"
-              width="55">
-            </el-table-column>
-            <el-table-column
-              label="Personal"
-              :filter-method="filterTag"
-              :filters="[{text: 'True', value: true}, {text: 'False', value: false}]"
-              filter-placement="bottom-end"
-              prop="is_personal"
-              min-width="150"
-            >
-              <template slot-scope="props">
-                {{props.row.is_personal}}
-              </template>
-            </el-table-column>
+            <slot name="select_field"></slot>
+            <slot name="is_personal"></slot>
             <el-table-column v-for="column in tableColumns"
                              :key="column.label"
                              :min-width="column.minWidth"
@@ -209,9 +195,6 @@
       },
       handleSelectionChange (val) {
         this.multipleSelection = val
-      },
-      filterTag (value, row) {
-        return row.is_personal === value
       }
     },
     created () {
