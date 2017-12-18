@@ -1,16 +1,6 @@
-# [Vue Paper Dashboard](https://www.creative-tim.com/product/vue-paper-dashboard-pro)
+# GO2 LEADS CLIENT
 
-> Admin dashboard based on paper dashboard UI template + vue-router
-
-This project is a vue version of [Paper-dashboard-pro](https://www.creative-tim.com/product/paper-dashboard-pro)
-designed for Vue js. The dashboard includes vue-router
-
-Check the [Live Demo here](https://cristijora.github.io/paper-dashboard-pro/#/admin/overview).
-
-![](http://i.imgur.com/3iC1hOs.gif)
-
-## Documentation
-Link to [Documentation](https://cristijora.github.io/paper-dashboard-pro/documentation.html?selectedKind=Buttons&selectedStory=Default&full=0&down=1&left=1&panelRight=0&downPanel=tuchk4%2Freadme%2Fpanel)
+This project is a single page application that serves as a control panel for go2 leads backend
 
 ## Build Setup
 
@@ -24,6 +14,3 @@ Link to [Documentation](https://cristijora.github.io/paper-dashboard-pro/documen
 `npm run unit`
 ### run and watch unit tests
 `npm run unit:watch`
-
-
-[CHANGELOG]: ./CHANGELOG.md

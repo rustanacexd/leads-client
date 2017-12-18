@@ -1,8 +1,8 @@
 {
-  "name": "vue-paper-dashboard-pro",
-  "version": "1.1.0",
-  "description": "A premium Vue.js admin dashboard for bootstrap. Coded by Cristi Jora, designed by Creative Tim.",
-  "author": "cristian.jora <cristian.jora@corebuild.eu>",
+  "name": "go2-leads-client",
+  "version": "1.0",
+  "description": "GO2 Leads Client",
+  "author": "rustan corpuz <rustan@go2impact.com>",
   "private": true,
   "scripts": {
     "dev": "cross-env ENABLE_ESLINT=true node build/dev-server.js",
