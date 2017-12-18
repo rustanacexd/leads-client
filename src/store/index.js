@@ -55,7 +55,7 @@ export default new Vuex.Store({
       state[resourceName].paged = data.results
       state[resourceName].total = data.count
     },
-    'DELETE_RESOURCE' (state, {indexToDelete, resourceName}) {
+    'DELETE_RESOURCE_FROM_TABLE' (state, {indexToDelete, resourceName}) {
       state[resourceName].paged.splice(indexToDelete, 1)
       state[resourceName].total -= 1
     },
@@ -89,9 +89,12 @@ export default new Vuex.Store({
         commit('SET_LOADING')
       })
     },
-    deleteResource ({commit}, {indexToDelete, resourceID, resourceName}) {
+    deleteResource ({commit}, {resourceID, resourceName}) {
       return api.deleteResource(resourceID, resourceName)
-        .then(() => commit('DELETE_RESOURCE', {indexToDelete, resourceName}))
+    },
+    deleteResourceFromTable ({commit}, {indexToDelete, resourceID, resourceName}) {
+      return api.deleteResource(resourceID, resourceName)
+        .then(() => commit('DELETE_RESOURCE_FROM_TABLE', {indexToDelete, resourceName}))
     },
     addResource ({commit}, {data, resourceName}) {
       return api.addResource(data, resourceName).then(() => {

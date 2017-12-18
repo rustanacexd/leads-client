@@ -3,7 +3,9 @@
     <form class="form-horizontal">
       <div class="card-header">
         <h4 class="card-title">
-          {{pageTitle}} Contact Form
+          <template v-if="isUpdate">Edit</template>
+          <template v-else>Add</template>
+          Contact Form <span v-if="$route.params.id"> (ID {{$route.params.id}})</span>
         </h4>
       </div>
       <div class="card-content">
@@ -251,10 +253,17 @@
 
       </div>
       <template v-if="isUpdate">
-        <div class="card-footer text-center">
-          <button type="submit" @click.prevent="validate('updateResource')" class="btn btn-fill btn-info btn-wd">Update
-            Contact
-          </button>
+        <div class="row text-center" style="max-width: 500px; margin: 0 auto">
+          <div class="card-footer col-sm-6">
+            <button type="submit" @click.prevent="validate('updateResource')"
+                    class="btn btn-fill btn-info btn-wd">Update Contact
+            </button>
+          </div>
+          <div class="card-footer col-sm-6">
+            <button type="button" @click="deleteResource"
+                    class="btn btn-fill btn-danger btn-wd">Delete Contact
+            </button>
+          </div>
         </div>
       </template>
 
@@ -273,12 +282,15 @@
   import {mapFields} from 'vee-validate'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
   import swal from 'sweetalert2'
+  import {deleteResourceMixin} from 'src/mixins'
+
 
   export default {
     components: {
       PSwitch
     },
-    props: ['pageTitle', 'organizations', 'isUpdate'],
+    props: ['organizations', 'isUpdate'],
+    mixins: [deleteResourceMixin],
     computed: {
       ...mapFields([
         'first_name',
@@ -306,7 +318,8 @@
             numeric: true,
             max_value: 2147483647
           }
-        }
+        },
+        resourceName: 'contact'
       }
     },
     methods: {
@@ -333,7 +346,7 @@
                 phone: this.contact.phone,
                 organization: Number.parseInt(this.contact.organization)
               },
-              resourceName: 'contact'
+              resourceName: this.resourceName
             }).then(
               swal({
                 title: `Success!`,

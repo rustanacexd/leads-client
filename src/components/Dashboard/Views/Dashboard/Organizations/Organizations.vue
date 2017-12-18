@@ -16,7 +16,7 @@
       label="Client"
       prop="client"
       min-width="100"
-      slot="is_personal"
+      slot="client"
     >
       <template slot-scope="props">
         <router-link :to="{ name: 'Edit client', params: { id: props.row.client }}">

@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading-main-panel :loading="loading"></loading-main-panel>
-    <contact-form @submit.prevent page-title="Add" :is-update="true"></contact-form>
+    <contact-form @submit.prevent :is-update="true"></contact-form>
 
   </div>
 </template>

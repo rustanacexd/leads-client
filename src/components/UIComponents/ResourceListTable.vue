@@ -146,7 +146,7 @@
     },
     methods: {
       deleteResource ({indexToDelete, resourceID}) {
-        this.$store.dispatch('deleteResource', {
+        this.$store.dispatch('deleteResourceFromTable', {
           resourceID,
           indexToDelete,
           resourceName: this.resourceName
@@ -176,8 +176,6 @@
         this.$router.push({name: 'Edit ' + this.resourceName, params: {id: row.id}})
       },
       handleDelete (index, row) {
-        let tableData = this.paged
-        const deleteResource = this.deleteResource
         swal({
           title: 'Are you sure?',
           text: `You won't be able to revert this!`,
@@ -187,12 +185,12 @@
           cancelButtonClass: 'btn btn-danger btn-fill',
           confirmButtonText: 'Yes, delete it!',
           buttonsStyling: false
-        }).then(function () {
-          let indexToDelete = tableData.findIndex((tableRow) => tableRow.id === row.id)
-          const resourceID = tableData[indexToDelete].id
+        }).then(() => {
+          let indexToDelete = this.paged.findIndex((tableRow) => tableRow.id === row.id)
+          const resourceID = this.paged[indexToDelete].id
 
           if (indexToDelete >= 0) {
-            deleteResource({indexToDelete, resourceID})
+            this.deleteResource({indexToDelete, resourceID})
           }
         }).catch(error => console.log(error))
       },
