@@ -37,12 +37,12 @@ const routes = [
       },
       {
         path: 'contact/add',
-        name: 'Add Contact',
+        name: 'Add contact',
         component: AddContact
       },
       {
         path: 'contact/edit/:id',
-        name: 'Edit Contact',
+        name: 'Edit contact',
         component: EditContact
       },
       {

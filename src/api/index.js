@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-let instance = axios.create({
+const instance = axios.create({
   baseURL: 'http://leads-api.local:9000'
 })
+
+const PAGE_SIZE = 25
 
 export default {
   getPagedResources (page, resourceName) {
@@ -31,7 +33,7 @@ export default {
   fetchAllOrgs (count) {
     let orgPromises = []
 
-    for (let i = 2; i <= count / 50; i++) {
+    for (let i = 2; i <= count / PAGE_SIZE; i++) {
       orgPromises.push(instance.get(`/organization/?page=${i}`))
     }
 
