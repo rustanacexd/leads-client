@@ -3,7 +3,6 @@ import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
 import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 // Dashboard pages
 import Overview from 'src/components/Dashboard/Views/Dashboard/Overview.vue'
-import Stats from 'src/components/Dashboard/Views/Dashboard/Stats.vue'
 import Contacts from 'src/components/Dashboard/Views/Dashboard/Contacts/Contacts.vue'
 import AddContact from 'src/components/Dashboard/Views/Dashboard/Contacts/AddContact.vue'
 import EditContact from 'src/components/Dashboard/Views/Dashboard/Contacts/EditContact.vue'
@@ -13,6 +12,9 @@ import EditClient from 'src/components/Dashboard/Views/Dashboard/Clients/EditCli
 import Organizations from 'src/components/Dashboard/Views/Dashboard/Organizations/Organizations.vue'
 import AddOrganization from 'src/components/Dashboard/Views/Dashboard/Organizations/AddOrganization.vue'
 import EditOrganization from 'src/components/Dashboard/Views/Dashboard/Organizations/EditOrganization.vue'
+import Campaigns from 'src/components/Dashboard/Views/Dashboard/Campaigns/Campaigns.vue'
+import AddCampaign from 'src/components/Dashboard/Views/Dashboard/Campaigns/AddCampaign.vue'
+import EditCampaign from 'src/components/Dashboard/Views/Dashboard/Campaigns/EditCampaign.vue'
 import Segments from 'src/components/Dashboard/Views/Dashboard/Segments.vue'
 
 const routes = [
@@ -30,11 +32,6 @@ const routes = [
         path: 'overview',
         name: 'Overview',
         component: Overview
-      },
-      {
-        path: 'stats',
-        name: 'Stats',
-        component: Stats
       },
       {
         path: 'contacts',
@@ -80,6 +77,21 @@ const routes = [
         path: 'organization/edit/:id',
         name: 'Edit organization',
         component: EditOrganization
+      },
+      {
+        path: 'campaigns',
+        name: 'Campaigns',
+        component: Campaigns
+      },
+      {
+        path: 'campaign/add',
+        name: 'Add campaign',
+        component: AddCampaign
+      },
+      {
+        path: 'campaign/edit/:id',
+        name: 'Edit campaign',
+        component: EditCampaign
       },
       {
         path: 'segments',

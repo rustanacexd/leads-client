@@ -6,11 +6,12 @@ export default [
     children: [{
       name: 'Overview',
       path: '/admin/overview'
-    },
-    {
-      name: 'Stats',
-      path: '/admin/stats'
     }]
+  },
+  {
+    name: 'Segments',
+    icon: 'ti-layers-alt',
+    path: '/admin/segments'
   },
   {
     name: 'Contacts',
@@ -55,8 +56,17 @@ export default [
     ]
   },
   {
-    name: 'Segments',
-    icon: 'ti-layers-alt',
-    path: '/admin/segments'
+    name: 'Campaigns',
+    icon: 'ti-folder',
+    children: [
+      {
+        name: 'Campaigns',
+        path: '/admin/campaigns'
+      },
+      {
+        name: 'Add Campaign',
+        path: '/admin/campaign/add'
+      }
+    ]
   }
 ]

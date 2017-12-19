@@ -1,6 +1,6 @@
 {
   "name": "go2-leads-client",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "GO2 Leads Client",
   "author": "rustan corpuz <rustan@go2impact.com>",
   "private": true,

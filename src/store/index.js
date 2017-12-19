@@ -10,21 +10,7 @@ export default new Vuex.Store({
     contact: {
       paged: [],
       total: 0,
-      contact: {
-        // first_name: '',
-        // last_name: '',
-        // full_name: '',
-        // email: '',
-        // is_personal: false,
-        // twitter_link: '',
-        // facebook_link: '',
-        // linkedin_link: '',
-        // confidence_score: '',
-        // email_score: '',
-        // position: '',
-        // phone: '',
-        // organization: ''
-      },
+      contact: {},
       searchString: ''
     },
     client: {
@@ -39,10 +25,13 @@ export default new Vuex.Store({
     organization: {
       paged: [],
       total: 0,
-      organization: {
-        // name: '',
-        // remote_key: '',
-      },
+      organization: {},
+      searchString: ''
+    },
+    campaign: {
+      paged: [],
+      total: 0,
+      campaign: {},
       searchString: ''
     },
     loading: false
