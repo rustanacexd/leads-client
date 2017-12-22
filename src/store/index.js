@@ -237,8 +237,17 @@ export default new Vuex.Store({
     'SET_RESOURCE_SEARCH_STRING' (state, {searchKey, resourceName}) {
       state[resourceName].searchString = searchKey
     },
+    'SET_SEGMENT_FILTER' (state, segmentFilter, index) {
+      state.segment.filters.splice(index, 1, segmentFilter)
+    },
     'SET_SEGMENT_FILTERS' (state, segmentFilters) {
       state.segment.filters = segmentFilters
+    },
+    'RESET_SEGMENT_FILTERS' (state) {
+      state.segment.filters.forEach(filter => {
+        Vue.set(filter, 'operand', '')
+        Vue.set(filter, 'filterValue', '')
+      })
     }
   },
   actions: {
@@ -288,6 +297,7 @@ export default new Vuex.Store({
       commit('SET_LOADING')
       api.getResource(segmentID, resourceName).then(({data}) => {
         commit('SET_RESOURCE', {data, resourceName})
+        commit('RESET_SEGMENT_FILTERS')
         if (data.segment_filters) {
           const newFilters = state.segment.filters.map(segmentFilter => {
             const filterObjData = data.segment_filters.find(filter => {
