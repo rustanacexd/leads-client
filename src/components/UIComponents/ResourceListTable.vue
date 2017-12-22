@@ -67,6 +67,7 @@
                 <a class="btn btn-simple btn-xs btn-danger btn-icon remove"
                    @click="handleDelete(props.$index, props.row)"><i class="ti-close"></i></a>
               </template>
+
             </el-table-column>
           </el-table>
         </div>
@@ -105,7 +106,10 @@
           return this.$store.state[this.resourceName].searchString
         },
         set (searchKey) {
-          this.$store.dispatch('searchResource', {searchKey, resourceName: this.resourceName})
+          this.$store.dispatch('searchResource', {
+            searchKey,
+            resourceName: this.resourceName
+          })
             .catch(error => {
               if (error.message) {
                 swal({

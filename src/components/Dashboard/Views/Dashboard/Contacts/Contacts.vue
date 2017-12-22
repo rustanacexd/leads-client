@@ -12,33 +12,30 @@
       label="ID"
       prop="id"
       min-width="100"
-      slot="id"
-    >
+      slot="id">
       <template slot-scope="props">
          {{props.row.id}}
       </template>
     </el-table-column>
 
     <el-table-column
-      label="Personal"
-      :filter-method="filterTag"
-      :filters="[{text: 'True', value: true}, {text: 'False', value: false}]"
-      filter-placement="bottom-end"
-      prop="is_personal"
-      min-width="125"
-      slot="is_personal"
-    >
-      <template slot-scope="props">
-        {{props.row.is_personal}}
-      </template>
-    </el-table-column>
+        label="Personal"
+        :filter-method="filterTag"
+        :filters="[{text: 'True', value: true}, {text: 'False', value: false}]"
+        filter-placement="bottom-end"
+        prop="is_personal"
+        min-width="125"
+        slot="is_personal">
+        <template slot-scope="props">
+          {{props.row.is_personal}}
+        </template>
+      </el-table-column>
 
     <el-table-column
       label="Organization"
       prop="organization"
       min-width="150"
-      slot="organization"
-    >
+      slot="organization">
       <template slot-scope="props">
         <router-link :to="{ name: 'Edit organization', params: { id: props.row.organization }}">
           {{props.row.organization}}

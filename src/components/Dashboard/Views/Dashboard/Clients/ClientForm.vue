@@ -113,14 +113,15 @@
                 remote_key: this.client.remote_key
               },
               resourceName: this.resourceName
-            }).then(
+            }).then(({id}) => {
               swal({
                 title: `Success!`,
+                text: `successfully created ${this.resourceName} - (ID) ${id}`,
                 buttonsStyling: false,
                 confirmButtonClass: 'btn btn-success btn-fill',
                 type: 'success'
               })
-            ).catch(error => {
+            }).catch(error => {
               if (error.message) {
                 swal({
                   title: 'Error',

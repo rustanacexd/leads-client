@@ -5,6 +5,16 @@ import api from '../api'
 
 Vue.use(Vuex)
 
+const NUMBER_OPERANDS = [
+  {value: 'exact', label: 'Exact'},
+  {value: 'icontains', label: 'Contains'},
+  {value: 'lt', label: 'Less than'},
+  {value: 'lte', label: 'Less than or equal'},
+  {value: 'gt', label: 'Greater than'},
+  {value: 'gte', label: 'Greater than or equal'}
+]
+const TEXT_OPERANDS = [{value: 'exact', label: 'Exact'}, {value: 'icontains', label: 'Contains'}]
+
 export default new Vuex.Store({
   state: {
     contact: {
@@ -16,16 +26,183 @@ export default new Vuex.Store({
     client: {
       paged: [],
       total: 0,
-      client: {
-        // name: '',
-        // remote_key: '',
-      },
+      client: {},
       searchString: ''
     },
     organization: {
       paged: [],
       total: 0,
       organization: {},
+      searchString: ''
+    },
+    segment: {
+      paged: [],
+      total: 0,
+      segment: {},
+      filters: [
+        {
+          id: '',
+          name: 'confidence_score',
+          label: 'Confidence Score',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'is_personal',
+          label: 'Is Personal',
+          operand: 'exact',
+          filterValue: false,
+          operands: [{value: 'exact', label: 'Exact'}]
+        },
+        {
+          id: '',
+          name: 'position',
+          label: 'Position',
+          operand: '',
+          filterValue: '',
+          validate: {alpha: true},
+          operands: TEXT_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__name',
+          label: 'Organization Name',
+          operand: '',
+          filterValue: '',
+          validate: {alpha_num: true},
+          operands: TEXT_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__revenue',
+          label: 'Organization Revenue',
+          operand: '',
+          filterValue: '',
+          validate: {decimal: 2, max: 10},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__address__country',
+          label: 'Country',
+          operand: '',
+          filterValue: '',
+          validate: {max: 255, alpha: true},
+          operands: TEXT_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__address__city',
+          label: 'City',
+          operand: '',
+          filterValue: '',
+          validate: {max: 255, alpha: true},
+          operands: TEXT_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__client__name',
+          label: 'Client Name',
+          operand: '',
+          filterValue: '',
+          validate: {max: 255},
+          operands: TEXT_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__social__facebook_shares',
+          label: 'Facebook Shares',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__social__instagram_followers',
+          label: 'Instagram Followers',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+
+        },
+        {
+          id: '',
+          name: 'organization__social__twitter_followers',
+          label: 'Twitter Followers',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__social__klout_score',
+          label: 'Klout Score',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__social__linkedin_shares',
+          label: 'Linkedin Shares',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__domain__name',
+          label: 'Domain Name',
+          operand: '',
+          filterValue: '',
+          validate: {alpha_num: true},
+          operands: TEXT_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__domain__domain_rank',
+          label: 'Domain Rank',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__domain__domainkeyword__keyword',
+          label: 'Domain Keyword',
+          operand: '',
+          filterValue: '',
+          validate: {alpha_num: true},
+          operands: TEXT_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__domain__organic_traffic_count',
+          label: 'Organic Traffic Count',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+        },
+        {
+          id: '',
+          name: 'organization__domain__adwords_traffic_count',
+          label: 'Adwords Traffic Count',
+          operand: '',
+          filterValue: '',
+          validate: {numeric: true, max_value: 2147483647},
+          operands: NUMBER_OPERANDS
+        }
+      ],
       searchString: ''
     },
     campaign: {
@@ -59,6 +236,9 @@ export default new Vuex.Store({
     },
     'SET_RESOURCE_SEARCH_STRING' (state, {searchKey, resourceName}) {
       state[resourceName].searchString = searchKey
+    },
+    'SET_SEGMENT_FILTERS' (state, segmentFilters) {
+      state.segment.filters = segmentFilters
     }
   },
   actions: {
@@ -86,8 +266,9 @@ export default new Vuex.Store({
         .then(() => commit('DELETE_RESOURCE_FROM_TABLE', {indexToDelete, resourceName}))
     },
     addResource ({commit}, {data, resourceName}) {
-      return api.addResource(data, resourceName).then(() => {
+      return api.addResource(data, resourceName).then(({data}) => {
         commit('SET_RESOURCE', {data: {}, resourceName})
+        return data
       })
     },
     updateResource ({commit}, {data, resourceName}) {
@@ -101,6 +282,35 @@ export default new Vuex.Store({
           commit('SET_RESOURCES', {data, resourceName})
           commit('SET_LOADING')
         })
+    },
+    getSegment ({commit, state}, segmentID) {
+      const resourceName = 'segment'
+      commit('SET_LOADING')
+      api.getResource(segmentID, resourceName).then(({data}) => {
+        commit('SET_RESOURCE', {data, resourceName})
+        if (data.segment_filters) {
+          const newFilters = state.segment.filters.map(segmentFilter => {
+            const filterObjData = data.segment_filters.find(filter => {
+              return filter.filter_name === segmentFilter.name
+            })
+            if (filterObjData) {
+              segmentFilter.filterValue = filterObjData.value
+              segmentFilter.operand = filterObjData.operand
+              segmentFilter.id = filterObjData.id
+            }
+            return segmentFilter
+          })
+
+          commit('SET_SEGMENT_FILTERS', newFilters)
+        }
+        commit('SET_LOADING')
+      })
+    },
+    updateSegment ({commit}, {data, segmentFilters}) {
+      return api.updateSegment(data, segmentFilters)
+    },
+    addSegment ({commit}, {data, segmentFilters}) {
+      return api.addSegment(data, segmentFilters)
     },
     getAllOrganizations ({commit, state}) {
       commit('SET_LOADING')

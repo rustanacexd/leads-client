@@ -15,7 +15,9 @@ import EditOrganization from 'src/components/Dashboard/Views/Dashboard/Organizat
 import Campaigns from 'src/components/Dashboard/Views/Dashboard/Campaigns/Campaigns.vue'
 import AddCampaign from 'src/components/Dashboard/Views/Dashboard/Campaigns/AddCampaign.vue'
 import EditCampaign from 'src/components/Dashboard/Views/Dashboard/Campaigns/EditCampaign.vue'
-import Segments from 'src/components/Dashboard/Views/Dashboard/Segments.vue'
+import Segments from 'src/components/Dashboard/Views/Dashboard/Segments/Segments.vue'
+import AddSegment from 'src/components/Dashboard/Views/Dashboard/Segments/AddSegment.vue'
+import EditSegment from 'src/components/Dashboard/Views/Dashboard/Segments/EditSegment.vue'
 
 const routes = [
   {
@@ -97,6 +99,16 @@ const routes = [
         path: 'segments',
         name: 'Segments',
         component: Segments
+      },
+      {
+        path: 'segment/add',
+        name: 'Add Segment',
+        component: AddSegment
+      },
+      {
+        path: 'segment/edit/:id',
+        name: 'Edit segment',
+        component: EditSegment
       }
     ]
   },

@@ -11,7 +11,16 @@ export default [
   {
     name: 'Segments',
     icon: 'ti-layers-alt',
-    path: '/admin/segments'
+    children: [
+      {
+        name: 'Segments',
+        path: '/admin/segments'
+      },
+      {
+        name: 'Add Segment',
+        path: '/admin/segment/add'
+      }
+    ]
   },
   {
     name: 'Contacts',

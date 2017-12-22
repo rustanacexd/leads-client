@@ -1,7 +1,9 @@
 <template>
   <resource-list-table :resource-name="resourceName"
                        :table-columns="tableColumns"
-  ></resource-list-table>
+  >
+
+  </resource-list-table>
 </template>
 <script>
   import ResourceListTable from 'src/components/UIComponents/ResourceListTable'
