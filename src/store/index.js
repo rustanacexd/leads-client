@@ -7,7 +7,6 @@ Vue.use(Vuex)
 
 const NUMBER_OPERANDS = [
   {value: 'exact', label: 'Exact'},
-  {value: 'icontains', label: 'Contains'},
   {value: 'lt', label: 'Less than'},
   {value: 'lte', label: 'Less than or equal'},
   {value: 'gt', label: 'Greater than'},
@@ -245,8 +244,13 @@ export default new Vuex.Store({
     },
     'RESET_SEGMENT_FILTERS' (state) {
       state.segment.filters.forEach(filter => {
-        Vue.set(filter, 'operand', '')
-        Vue.set(filter, 'filterValue', '')
+        if (filter.name === 'is_personal') {
+          Vue.set(filter, 'operand', 'exact')
+          Vue.set(filter, 'filterValue', false)
+        } else {
+          Vue.set(filter, 'operand', '')
+          Vue.set(filter, 'filterValue', '')
+        }
       })
     }
   },
@@ -304,7 +308,11 @@ export default new Vuex.Store({
               return filter.filter_name === segmentFilter.name
             })
             if (filterObjData) {
-              segmentFilter.filterValue = filterObjData.value
+              if (filterObjData.filter_name === 'is_personal') {
+                segmentFilter.filterValue = (filterObjData.value === 'true')
+              } else {
+                segmentFilter.filterValue = filterObjData.value
+              }
               segmentFilter.operand = filterObjData.operand
               segmentFilter.id = filterObjData.id
             }

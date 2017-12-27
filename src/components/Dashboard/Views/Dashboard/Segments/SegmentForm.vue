@@ -267,7 +267,6 @@
       },
       validate (actionName) {
         this.$validator.validateAll().then(isValid => {
-          console.log(this.filters)
           if (isValid) {
             this.$store.dispatch(actionName, {
               data: {

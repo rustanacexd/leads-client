@@ -43,20 +43,24 @@ export default {
   updateSegment (data, segmentFilters) {
     return instance.put(`/segment/${data.id}/`, data)
       .then(({data}) => {
-        const addFilters = segmentFilters.filter(filter => filter.filterValue)
-          .map(filter => {
-            const filterData = {
-              filter_name: filter.name,
-              operand: filter.operand,
-              value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
-              segment: data.id
-            }
-            if (filter.id) {
-              return instance.put(`/segment-filter/${filter.id}/`, filterData)
-            }
-            return instance.post(`/segment-filter/`, filterData)
-          })
-        return axios.all(addFilters).then(() => data.id)
+        const filteredFilters = segmentFilters
+          .filter(filter => filter.filterValue || typeof (filter.filterValue) === 'boolean')
+
+        const filterPromises = filteredFilters.map(filter => {
+          const filterData = {
+            filter_name: filter.name,
+            operand: filter.operand,
+            value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
+            segment: data.id
+          }
+          if (filter.id) {
+            return instance.put(`/segment-filter/${filter.id}/`, filterData)
+          }
+          return instance.post(`/segment-filter/`, filterData)
+        })
+        
+
+        return axios.all(filterPromises).then(() => data.id)
       })
   },
   getAllOrganizations () {

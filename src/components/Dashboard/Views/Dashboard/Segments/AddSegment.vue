@@ -18,6 +18,7 @@
     },
     created () {
       this.$store.commit('SET_RESOURCE', {data: {}, resourceName: 'segment'})
+      this.$store.commit('RESET_SEGMENT_FILTERS')
     }
   }
 </script>
