@@ -26,42 +26,33 @@ export default {
     return instance.get(`/${resourceName}?search=${searchKey}`)
   },
   addSegment (data, segmentFilters) {
-    return instance.post('/segment/', data)
-      .then(({data}) => {
-        const addFilters = segmentFilters.filter(filter => filter.filterValue)
-          .map(filter => {
-            return instance.post('/segment-filter/', {
-              filter_name: filter.name,
-              operand: filter.operand,
-              value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
-              segment: data.id
-            })
-          })
-        return axios.all(addFilters).then(() => data.id)
+    const filters = segmentFilters.filter(filter => filter.filterValue)
+      .map(filter => {
+        return {
+          filter_name: filter.name,
+          operand: filter.operand,
+          value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
+          segment: data.id
+        }
       })
+    return instance.post('/segment/', {...data, segment_filters: filters})
   },
   updateSegment (data, segmentFilters) {
-    return instance.put(`/segment/${data.id}/`, data)
-      .then(({data}) => {
-        const filteredFilters = segmentFilters
-          .filter(filter => filter.filterValue || typeof (filter.filterValue) === 'boolean')
+    const filteredFilters = segmentFilters
+      .filter(filter => filter.filterValue || typeof (filter.filterValue) === 'boolean')
 
-        const filterPromises = filteredFilters.map(filter => {
-          const filterData = {
-            filter_name: filter.name,
-            operand: filter.operand,
-            value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
-            segment: data.id
-          }
-          if (filter.id) {
-            return instance.put(`/segment-filter/${filter.id}/`, filterData)
-          }
-          return instance.post(`/segment-filter/`, filterData)
-        })
-        
+    console.log(filteredFilters)
+    const filters = filteredFilters.map(filter => {
+      return {
+        filter_name: filter.name,
+        operand: filter.operand,
+        value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
+        segment: data.id
+      }
+    })
 
-        return axios.all(filterPromises).then(() => data.id)
-      })
+    return instance.put(`/segment/${data.id}/`, {...data, segment_filters: filters})
+      .then(({data}) => data.id)
   },
   getAllOrganizations () {
     return instance.get('/organization/').then(({data: {count, results}}) => {

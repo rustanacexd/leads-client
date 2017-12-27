@@ -37,7 +37,9 @@ export default new Vuex.Store({
     segment: {
       paged: [],
       total: 0,
-      segment: {},
+      segment: {
+        client: 1
+      },
       filters: [
         {
           id: '',
