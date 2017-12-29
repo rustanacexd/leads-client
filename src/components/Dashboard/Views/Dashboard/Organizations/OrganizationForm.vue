@@ -20,7 +20,8 @@
                          v-validate="'max:255'"
                          v-model="organization.name"
                          data-vv-as="Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="name.invalid">
                     {{ getError('name') }}
                   </small>
@@ -40,7 +41,8 @@
                          v-validate="'max:100'"
                          v-model="organization.domain_name"
                          data-vv-as="Domain Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="domain_name.invalid">
                     {{ getError('domain_name') }}
                   </small>
@@ -60,7 +62,8 @@
                          v-validate="'decimal:2|max:10'"
                          v-model="organization.revenue"
                          data-vv-as="Revenue"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="revenue.invalid">
                     {{ getError('revenue') }}
                   </small>
@@ -81,7 +84,8 @@
                          v-validate="modelValidations.positiveInteger"
                          v-model="organization.employees"
                          data-vv-as="Employees"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="employees.invalid">
                     {{ getError('employees') }}
                   </small>
@@ -102,7 +106,8 @@
                          v-validate="'url'"
                          v-model="organization.twitter_link"
                          data-vv-as="Twitter Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="twitter_link.invalid">
                     {{ getError('twitter_link') }}
                   </small>
@@ -123,7 +128,8 @@
                          v-validate="'url'"
                          v-model="organization.facebook_link"
                          data-vv-as="Facebook Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="facebook_link.invalid">
                     {{ getError('facebook_link') }}
                   </small>
@@ -144,7 +150,8 @@
                          v-validate="'url'"
                          v-model="organization.instagram_link"
                          data-vv-as="Instagram Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="instagram_link.invalid">
                     {{ getError('instagram_link') }}
                   </small>
@@ -165,7 +172,8 @@
                          v-validate="'url'"
                          v-model="organization.linkedin_link"
                          data-vv-as="Linkedin Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="linkedin_link.invalid">
                     {{ getError('linkedin_link') }}
                   </small>
@@ -186,7 +194,8 @@
                          v-validate="'url'"
                          v-model="organization.yelp_link"
                          data-vv-as="Yelp Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="yelp_link.invalid">
                     {{ getError('yelp_link') }}
                   </small>
@@ -207,7 +216,8 @@
                          v-validate="'url'"
                          v-model="organization.pinterest_link"
                          data-vv-as="Pinterest Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="pinterest_link.invalid">
                     {{ getError('pinterest_link') }}
                   </small>
@@ -228,7 +238,8 @@
                          v-validate="'max:50'"
                          v-model="organization.phone_1"
                          data-vv-as="Phone 1"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="phone_1.invalid">
                     {{ getError('phone_1') }}
                   </small>
@@ -249,7 +260,8 @@
                          v-validate="'max:50'"
                          v-model="organization.phone_2"
                          data-vv-as="Phone 2"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="phone_2.invalid">
                     {{ getError('phone_2') }}
                   </small>
@@ -270,7 +282,8 @@
                          v-validate="'required|numeric'"
                          v-model="organization.client"
                          data-vv-as="Client ID"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="client.invalid">
                     {{ getError('client') }}
                   </small>

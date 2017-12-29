@@ -20,7 +20,8 @@
                          v-validate="'required|max:255'"
                          v-model="segment.name"
                          data-vv-as="Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="name.invalid">
                     {{ getError('name') }}
                   </small>
@@ -40,7 +41,8 @@
                          v-validate="'max:255'"
                          v-model="segment.description"
                          data-vv-as="Description"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="description.invalid">
                     {{ getError('description') }}
                   </small>
@@ -61,7 +63,8 @@
                          v-validate="'numeric'"
                          v-model="segment.client"
                          data-vv-as="Client"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="client.invalid">
                     {{ getError('client') }}
                   </small>
@@ -279,7 +282,7 @@
                 campaigns: this.dynamicCampaigns.map(Number)
               },
               segmentFilters: this.filters
-            }).then(id => {
+            }).then(({id}) => {
               swal({
                 title: `Success!`,
                 buttonsStyling: false,

@@ -20,7 +20,8 @@
                          v-validate="'required|max:255'"
                          v-model="campaign.name"
                          data-vv-as="Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="name.invalid">
                     {{ getError('name') }}
                   </small>
@@ -40,7 +41,8 @@
                          v-validate="'required|numeric'"
                          v-model="campaign.client"
                          data-vv-as="Client"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="client.invalid">
                     {{ getError('client') }}
                   </small>

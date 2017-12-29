@@ -20,7 +20,8 @@
                          v-validate="'required'"
                          v-model="client.name"
                          data-vv-as="Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="name.invalid">
                     {{ getError('name') }}
                   </small>
@@ -40,7 +41,8 @@
                          v-validate="'max:255'"
                          v-model="client.remote_key"
                          data-vv-as="Remote Key"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="remote_key.invalid">
                     {{ getError('remote_key') }}
                   </small>

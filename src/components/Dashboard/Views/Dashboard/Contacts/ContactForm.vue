@@ -20,7 +20,8 @@
                          v-validate="'max:100'"
                          v-model="contact.first_name"
                          data-vv-as="First Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="first_name.invalid">
                     {{ getError('first_name') }}
                   </small>
@@ -38,7 +39,8 @@
                          v-validate="'max:100'"
                          v-model="contact.last_name"
                          data-vv-as="Last Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="last_name.invalid">
                     {{ getError('last_name') }}
                   </small>
@@ -56,7 +58,8 @@
                          v-validate="'max:100'"
                          v-model="contact.full_name"
                          data-vv-as="Full Name"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="full_name.invalid">
                     {{ getError('full_name') }}
                   </small>
@@ -77,7 +80,8 @@
                          v-validate="'required|email'"
                          v-model="contact.email"
                          data-vv-as="Email"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="email.invalid">
                     {{ getError('email') }}
                   </small>
@@ -95,7 +99,8 @@
                          v-validate="'max:50'"
                          v-model="contact.phone"
                          data-vv-as="Phone number"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="phone.invalid">
                     {{ getError('phone') }}
                   </small>
@@ -113,7 +118,8 @@
                          v-validate="'max:100'"
                          v-model="contact.position"
                          data-vv-as="Position"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="position.invalid">
                     {{ getError('position') }}
                   </small>
@@ -148,7 +154,8 @@
                          v-validate="'url'"
                          v-model="contact.twitter_link"
                          data-vv-as="Twitter Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="twitter_link.invalid">
                     {{ getError('twitter_link') }}
                   </small>
@@ -166,7 +173,8 @@
                          v-validate="'url'"
                          v-model="contact.facebook_link"
                          data-vv-as="Facebook Link"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="facebook_link.invalid">
                     {{ getError('facebook_link') }}
                   </small>
@@ -184,7 +192,8 @@
                          v-validate="'url'"
                          v-model="contact.linkedin_link"
                          data-vv-as="LinkedIn"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="linkedin_link.invalid">
                     {{ getError('linkedin_link') }}
                   </small>
@@ -205,7 +214,8 @@
                          v-validate="modelValidations.positiveInteger"
                          v-model="contact.confidence_score"
                          data-vv-as="Confidence Score"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="confidence_score.invalid">
                     {{ getError('confidence_score') }}
                   </small>
@@ -223,7 +233,8 @@
                          v-validate="modelValidations.positiveInteger"
                          v-model="contact.email_score"
                          data-vv-as="Email Score"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="email_score.invalid">
                     {{ getError('email_score') }}
                   </small>
@@ -241,7 +252,8 @@
                          v-validate="'required|numeric'"
                          v-model="contact.organization"
                          data-vv-as="Organization ID"
-                         class="form-control">
+                         class="form-control"
+                         @keydown.enter.prevent>
                   <small class="text-danger" v-show="organization.invalid">
                     {{ getError('organization') }}
                   </small>
