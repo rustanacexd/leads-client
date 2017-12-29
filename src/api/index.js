@@ -1,7 +1,8 @@
 import axios from 'axios'
 
+
 const instance = axios.create({
-  baseURL: 'http://leads-api.local:9000'
+  baseURL: (process.env.NODE_ENV === 'production') ? 'http://leads-api.go2impact.com' : 'http://leads-api.local:9000'
 })
 
 const PAGE_SIZE = 25
