@@ -295,7 +295,7 @@ export default new Vuex.Store({
       })
     },
     updateResource ({commit}, {data, resourceName}) {
-      return api.updateResource(data, resourceName)
+      return api.updateResource(data, resourceName).then(response => response.data)
     },
     searchResource ({commit}, {searchKey, resourceName}) {
       commit('SET_RESOURCE_SEARCH_STRING', {searchKey, resourceName})

@@ -116,7 +116,7 @@
             }).then(({id}) => {
               swal({
                 title: `Success!`,
-                text: `successfully created ${this.resourceName} - (ID) ${id}`,
+                text: 'successfully ' + (this.isUpdate ? 'edited' : 'created') + ` ${this.resourceName} - (ID) ${id}`,
                 buttonsStyling: false,
                 confirmButtonClass: 'btn btn-success btn-fill',
                 type: 'success'

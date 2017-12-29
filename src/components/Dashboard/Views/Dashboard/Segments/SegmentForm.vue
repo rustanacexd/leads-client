@@ -283,7 +283,7 @@
               swal({
                 title: `Success!`,
                 buttonsStyling: false,
-                text: `successfully created ${this.resourceName} - (ID) ${id}`,
+                text: 'successfully ' + (this.isUpdate ? 'edited' : 'created') + ` ${this.resourceName} - (ID) ${id}`,
                 confirmButtonClass: 'btn btn-success btn-fill',
                 type: 'success'
               })
