@@ -37,9 +37,7 @@ export default new Vuex.Store({
     segment: {
       paged: [],
       total: 0,
-      segment: {
-        client: 1
-      },
+      segment: {},
       filters: [
         {
           id: '',
@@ -204,7 +202,8 @@ export default new Vuex.Store({
           operands: NUMBER_OPERANDS
         }
       ],
-      searchString: ''
+      searchString: '',
+      dynamicCampaigns: []
     },
     campaign: {
       paged: [],
@@ -254,6 +253,15 @@ export default new Vuex.Store({
           Vue.set(filter, 'filterValue', '')
         }
       })
+    },
+    'SET_CAMPAIGNS' (state, campaigns) {
+      state.segment.dynamicCampaigns = campaigns
+    },
+    'ADD_DYNAMIC_CAMPAIGN' (state, campaign) {
+      state.segment.dynamicCampaigns.push(campaign)
+    },
+    'REMOVE_DYNAMIC_CAMPAIGN' (state, campaign) {
+      state.segment.dynamicCampaigns.splice(state.segment.dynamicCampaigns.indexOf(campaign), 1)
     }
   },
   actions: {
@@ -303,6 +311,7 @@ export default new Vuex.Store({
       commit('SET_LOADING')
       api.getResource(segmentID, resourceName).then(({data}) => {
         commit('SET_RESOURCE', {data, resourceName})
+        commit('SET_CAMPAIGNS', data.campaigns)
         commit('RESET_SEGMENT_FILTERS')
         if (data.segment_filters) {
           const newFilters = state.segment.filters.map(segmentFilter => {
@@ -323,6 +332,7 @@ export default new Vuex.Store({
 
           commit('SET_SEGMENT_FILTERS', newFilters)
         }
+
         commit('SET_LOADING')
       })
     },
@@ -330,7 +340,10 @@ export default new Vuex.Store({
       return api.updateSegment(data, segmentFilters)
     },
     addSegment ({commit}, {data, segmentFilters}) {
-      return api.addSegment(data, segmentFilters)
+      return api.addSegment(data, segmentFilters).then(() => {
+        commit('SET_RESOURCE', {data: {}, resourceName: 'segment'})
+        commit('RESET_SEGMENT_FILTERS')
+      })
     },
     getAllOrganizations ({commit, state}) {
       commit('SET_LOADING')

@@ -158,7 +158,7 @@
           .then(
             swal({
               title: 'Deleted!',
-              text: 'Item has been deleted.',
+              text: this.resourceName + ' has been deleted.',
               type: 'success',
               confirmButtonClass: 'btn btn-success btn-fill',
               buttonsStyling: false

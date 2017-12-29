@@ -20,7 +20,7 @@ export const deleteResourceMixin = {
           .then(
             swal({
               title: 'Deleted!',
-              text: 'Client has been deleted.',
+              text: this.resourceName + ' has been deleted.',
               type: 'success',
               confirmButtonClass: 'btn btn-success btn-fill',
               buttonsStyling: false

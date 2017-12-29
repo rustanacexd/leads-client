@@ -79,7 +79,7 @@
                 <div class="col-sm-11">
                   <el-tag
                     :key="campaign"
-                    v-for="campaign in campaigns.dynamicCampaigns"
+                    v-for="campaign in dynamicCampaigns"
                     type="primary"
                     :closable="true"
                     :close-transition="false"
@@ -237,13 +237,15 @@
       },
       filters () {
         return this.$store.state.segment.filters
+      },
+      dynamicCampaigns () {
+        return this.$store.state.segment.dynamicCampaigns
       }
     },
     data () {
       return {
         resourceName: 'segment',
         campaigns: {
-          dynamicCampaigns: [],
           inputVisible: false,
           inputValue: ''
         }
@@ -251,12 +253,12 @@
     },
     methods: {
       handleClose (tag) {
-        this.campaigns.dynamicCampaigns.splice(this.campaigns.dynamicCampaigns.indexOf(tag), 1)
+        this.$store.commit('REMOVE_DYNAMIC_CAMPAIGN', tag)
       },
       handleInputConfirm () {
         let inputValue = this.campaigns.inputValue
         if (inputValue > 0) {
-          this.campaigns.dynamicCampaigns.push(inputValue)
+          this.$store.commit('ADD_DYNAMIC_CAMPAIGN', inputValue)
         }
 
         this.campaigns.inputVisible = false
@@ -274,11 +276,10 @@
                 name: this.segment.name,
                 client: Number.parseInt(this.segment.client),
                 description: this.segment.description,
-                campaigns: this.campaigns.dynamicCampaigns.map(Number)
+                campaigns: this.dynamicCampaigns.map(Number)
               },
               segmentFilters: this.filters
             }).then(id => {
-              this.campaigns.dynamicCampaigns = []
               swal({
                 title: `Success!`,
                 buttonsStyling: false,

@@ -41,7 +41,6 @@ export default {
     const filteredFilters = segmentFilters
       .filter(filter => filter.filterValue || typeof (filter.filterValue) === 'boolean')
 
-    console.log(filteredFilters)
     const filters = filteredFilters.map(filter => {
       return {
         filter_name: filter.name,
