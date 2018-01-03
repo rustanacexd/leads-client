@@ -18,6 +18,7 @@ import EditCampaign from 'src/components/Dashboard/Views/Dashboard/Campaigns/Edi
 import Segments from 'src/components/Dashboard/Views/Dashboard/Segments/Segments.vue'
 import AddSegment from 'src/components/Dashboard/Views/Dashboard/Segments/AddSegment.vue'
 import EditSegment from 'src/components/Dashboard/Views/Dashboard/Segments/EditSegment.vue'
+import FilteredContacts from 'src/components/Dashboard/Views/Dashboard/Segments/FilteredContacts.vue'
 
 const routes = [
   {
@@ -102,13 +103,19 @@ const routes = [
       },
       {
         path: 'segment/add',
-        name: 'Add Segment',
+        name: 'Add segment',
         component: AddSegment
       },
       {
         path: 'segment/edit/:id',
         name: 'Edit segment',
         component: EditSegment
+      },
+      {
+        path: 'segment/:id/contacts',
+        name: 'Filtered contacts',
+        component: FilteredContacts
+
       }
     ]
   },

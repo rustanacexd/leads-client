@@ -306,6 +306,29 @@ export default new Vuex.Store({
           commit('SET_LOADING')
         })
     },
+    getContactsWithQuery ({commit}, resourceID) {
+      commit('SET_LOADING')
+      let queryString = ''
+      return api.getResource(resourceID, 'segment').then(({data}) => {
+        if (data.segment_filters) {
+          for (let segment of data.segment_filters) {
+            queryString += segment.filter_name
+            if (segment.operand === 'exact') {
+              queryString += `=${segment.value}`
+            } else {
+              queryString += `__${segment.operand}=${segment.value}`
+            }
+
+            queryString += '&'
+          }
+
+          return api.getContactsWithQuery(queryString).then(({data}) => {
+            commit('SET_LOADING')
+            commit('SET_RESOURCES', {data, resourceName: 'contact'})
+          })
+        }
+      })
+    },
     getSegment ({commit, state}, segmentID) {
       const resourceName = 'segment'
       commit('SET_LOADING')
@@ -329,7 +352,6 @@ export default new Vuex.Store({
             }
             return segmentFilter
           })
-
           commit('SET_SEGMENT_FILTERS', newFilters)
         }
 
@@ -337,12 +359,34 @@ export default new Vuex.Store({
       })
     },
     updateSegment ({commit}, {data, segmentFilters}) {
-      return api.updateSegment(data, segmentFilters)
+      const filteredFilters = segmentFilters
+        .filter(filter => filter.filterValue || typeof (filter.filterValue) === 'boolean')
+
+      const filters = filteredFilters.map(filter => {
+        return {
+          filter_name: filter.name,
+          operand: filter.operand,
+          value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
+          segment: data.id
+        }
+      })
+      return api.updateSegment(data, filters)
     },
     addSegment ({commit}, {data, segmentFilters}) {
-      return api.addSegment(data, segmentFilters).then(() => {
+      const filters = segmentFilters.filter(filter => filter.filterValue)
+        .map(filter => {
+          return {
+            filter_name: filter.name,
+            operand: filter.operand,
+            value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
+            segment: data.id
+          }
+        })
+
+      return api.addSegment(data, filters).then(id => {
         commit('SET_RESOURCE', {data: {}, resourceName: 'segment'})
         commit('RESET_SEGMENT_FILTERS')
+        return id
       })
     },
     getAllOrganizations ({commit, state}) {

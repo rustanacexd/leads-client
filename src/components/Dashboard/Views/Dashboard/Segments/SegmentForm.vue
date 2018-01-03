@@ -282,7 +282,7 @@
                 campaigns: this.dynamicCampaigns.map(Number)
               },
               segmentFilters: this.filters
-            }).then(({id}) => {
+            }).then(id => {
               swal({
                 title: `Success!`,
                 buttonsStyling: false,

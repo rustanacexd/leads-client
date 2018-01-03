@@ -17,7 +17,7 @@ export default [
         path: '/admin/segments'
       },
       {
-        name: 'Add Segment',
+        name: 'Add segment',
         path: '/admin/segment/add'
       }
     ]

@@ -26,32 +26,15 @@ export default {
   searchResource (searchKey, resourceName) {
     return instance.get(`/${resourceName}?search=${searchKey}`)
   },
+  getContactsWithQuery (searchString) {
+    return instance.get(`/contact/?${searchString}`)
+  },
   addSegment (data, segmentFilters) {
-    const filters = segmentFilters.filter(filter => filter.filterValue)
-      .map(filter => {
-        return {
-          filter_name: filter.name,
-          operand: filter.operand,
-          value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
-          segment: data.id
-        }
-      })
-    return instance.post('/segment/', {...data, segment_filters: filters})
+    return instance.post('/segment/', {...data, segment_filters: segmentFilters})
+      .then(({data}) => data.id)
   },
   updateSegment (data, segmentFilters) {
-    const filteredFilters = segmentFilters
-      .filter(filter => filter.filterValue || typeof (filter.filterValue) === 'boolean')
-
-    const filters = filteredFilters.map(filter => {
-      return {
-        filter_name: filter.name,
-        operand: filter.operand,
-        value: typeof (filter.filterValue) === 'boolean' ? filter.filterValue.toString() : filter.filterValue,
-        segment: data.id
-      }
-    })
-
-    return instance.put(`/segment/${data.id}/`, {...data, segment_filters: filters})
+    return instance.put(`/segment/${data.id}/`, {...data, segment_filters: segmentFilters})
       .then(({data}) => data.id)
   },
   getAllOrganizations () {

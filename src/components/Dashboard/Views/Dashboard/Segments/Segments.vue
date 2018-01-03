@@ -1,15 +1,13 @@
 <template>
   <resource-list-table :resource-name="resourceName"
-                       :table-columns="tableColumns"
-  >
-  <el-table-column
+                       :table-columns="tableColumns">
+    <el-table-column
       label="ID"
       prop="id"
       min-width="50"
-      slot="id"
-    >
+      slot="id">
       <template slot-scope="props">
-         {{props.row.id}}
+        {{props.row.id}}
       </template>
     </el-table-column>
 
@@ -17,14 +15,14 @@
       label="Client"
       prop="client"
       min-width="50"
-      slot="client"
-    >
+      slot="client">
       <template slot-scope="props">
         <router-link v-if="props.row.client" :to="{ name: 'Edit client', params: { id: props.row.client }}">
           {{props.row.client}}
         </router-link>
       </template>
     </el-table-column>
+
   </resource-list-table>
 </template>
 <script>
