@@ -310,6 +310,7 @@ export default new Vuex.Store({
       commit('SET_LOADING')
       let queryString = ''
       return api.getResource(resourceID, 'segment').then(({data}) => {
+        commit('SET_RESOURCE', {data, resourceName: 'segment'})
         if (data.segment_filters) {
           for (let segment of data.segment_filters) {
             queryString += segment.filter_name
@@ -321,7 +322,6 @@ export default new Vuex.Store({
 
             queryString += '&'
           }
-
           return api.getContactsWithQuery(queryString).then(({data}) => {
             commit('SET_LOADING')
             commit('SET_RESOURCES', {data, resourceName: 'contact'})

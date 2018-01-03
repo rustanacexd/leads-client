@@ -8,8 +8,7 @@
             <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add ' + resourceName})">Add new
               {{resourceName}}
             </button>
-            <button class="btn btn-primary btn-fill btn-wd">Import</button>
-            <button class="btn btn-primary btn-fill btn-wd">Export</button>
+            <button class="btn btn-primary btn-fill btn-wd">Export CSV</button>
           </div>
         </div>
       </div>
@@ -211,6 +210,9 @@
           this.$router.push({name: 'Filtered contacts', params: {id: resourceID}})
         })
       }
+    },
+    created () {
+      this.$store.dispatch('getContactsWithQuery', this.$route.params.id)
     }
   }
 
