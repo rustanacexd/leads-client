@@ -396,7 +396,7 @@ export default new Vuex.Store({
       return api.updateSegment(data, filters)
     },
     addSegment ({commit}, {data, segmentFilters}) {
-      const filters = segmentFilters.filter(filter => filter.filterValue)
+      const filters = segmentFilters.filter(filter => filter.filterValue || typeof (filter.filterValue) === 'boolean')
         .map(filter => {
           return {
             filter_name: filter.name,
@@ -405,7 +405,6 @@ export default new Vuex.Store({
             segment: data.id
           }
         })
-
       return api.addSegment(data, filters).then(id => {
         commit('SET_RESOURCE', {data: {}, resourceName: 'segment'})
         commit('RESET_SEGMENT_FILTERS')
