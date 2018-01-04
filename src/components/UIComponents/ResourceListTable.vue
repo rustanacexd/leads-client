@@ -8,7 +8,11 @@
             <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add ' + resourceName})">Add new
               {{resourceName}}
             </button>
-            <button class="btn btn-primary btn-fill btn-wd">Export CSV</button>
+            <a ref="exportCSVButton" v-show="!showButton" @click="exportResource"
+               class="btn btn-primary btn-fill btn-wd">Export CSV</a>
+            <a v-show="showButton" @click="downloadResource" ref="downloadCSVButton"
+               class="btn btn-primary btn-fill btn-wd">Download
+              CSV</a>
           </div>
         </div>
       </div>
@@ -147,7 +151,8 @@
           currentPage: 1,
           total: 0
         },
-        multipleSelection: []
+        multipleSelection: [],
+        showButton: false
       }
     },
     methods: {
@@ -209,6 +214,21 @@
         this.$store.dispatch('getContactsWithQuery', resourceID).then(() => {
           this.$router.push({name: 'Filtered contacts', params: {id: resourceID}})
         })
+      },
+      exportResource () {
+        this.$store.dispatch('exportResource', {
+          page: this.pagination.currentPage,
+          resourceName: this.resourceName
+        }).then(data => {
+          this.showButton = true
+          this.$refs.downloadCSVButton.target = '_blank'
+          this.$refs.downloadCSVButton.href = 'data:text/csv;charset=utf-8,' + encodeURI(data)
+          this.$refs.downloadCSVButton.download = `go2-leads-${this.resourceName}-${new Date().toLocaleString()}-export.csv`
+        })
+      },
+      downloadResource () {
+        this.$refs.downloadCSVButton.click()
+        this.showButton = false
       }
     },
     created () {

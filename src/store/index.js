@@ -203,6 +203,7 @@ export default new Vuex.Store({
         }
       ],
       searchString: '',
+      queryString: '',
       dynamicCampaigns: []
     },
     campaign: {
@@ -236,6 +237,9 @@ export default new Vuex.Store({
     },
     'SET_RESOURCE_SEARCH_STRING' (state, {searchKey, resourceName}) {
       state[resourceName].searchString = searchKey
+    },
+    'SET_SEGMENT_QUERY_STRING' (state, queryString) {
+      state.segment.queryString = queryString
     },
     'SET_SEGMENT_FILTER' (state, segmentFilter, index) {
       state.segment.filters.splice(index, 1, segmentFilter)
@@ -295,7 +299,8 @@ export default new Vuex.Store({
       })
     },
     updateResource ({commit}, {data, resourceName}) {
-      return api.updateResource(data, resourceName).then(response => response.data)
+      return api.updateResource(data, resourceName)
+        .then(response => response.data)
     },
     searchResource ({commit}, {searchKey, resourceName}) {
       commit('SET_RESOURCE_SEARCH_STRING', {searchKey, resourceName})
@@ -304,6 +309,22 @@ export default new Vuex.Store({
         .then(({data}) => {
           commit('SET_RESOURCES', {data, resourceName})
           commit('SET_LOADING')
+        })
+    },
+    exportResource ({commit}, {page, resourceName}) {
+      commit('SET_LOADING')
+      return api.exportResourcesCSV(page, resourceName)
+        .then(({data}) => {
+          commit('SET_LOADING')
+          return data
+        })
+    },
+    exportSegmentContacts ({commit, state}, page) {
+      commit('SET_LOADING')
+      return api.exportSegmentContactsCSV(state.segment.queryString, page)
+        .then(({data}) => {
+          commit('SET_LOADING')
+          return data
         })
     },
     getContactsWithQuery ({commit}, resourceID) {
@@ -322,6 +343,8 @@ export default new Vuex.Store({
 
             queryString += '&'
           }
+          commit('SET_SEGMENT_QUERY_STRING', queryString)
+
           return api.getContactsWithQuery(queryString).then(({data}) => {
             commit('SET_LOADING')
             commit('SET_RESOURCES', {data, resourceName: 'contact'})

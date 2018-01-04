@@ -29,6 +29,12 @@ export default {
   getContactsWithQuery (searchString) {
     return instance.get(`/contact/?${searchString}`)
   },
+  exportResourcesCSV (page, resourceName) {
+    return instance.get(`/${resourceName}/?page=${page}&format=csv`)
+  },
+  exportSegmentContactsCSV (queryString, page) {
+    return instance.get(`/contact/?${queryString}?page=${page}&format=csv`)
+  },
   addSegment (data, segmentFilters) {
     return instance.post('/segment/', {...data, segment_filters: segmentFilters})
       .then(({data}) => data.id)
