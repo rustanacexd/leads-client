@@ -56,6 +56,8 @@
   </div>
 </template>
 <script>
+  import swal from 'sweetalert2'
+
   export default {
     data () {
       return {
@@ -71,6 +73,15 @@
         }).then(() => {
           this.$router.push('/admin')
         })
+          .catch(error => {
+            swal({
+              title: 'Error',
+              text: error.message,
+              type: 'error',
+              buttonsStyling: false,
+              confirmButtonClass: 'btn btn-danger btn-fill'
+            })
+          })
       }
     }
   }

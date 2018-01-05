@@ -274,11 +274,12 @@ export default new Vuex.Store({
       return api.login(username, password).then(({data}) => {
         localStorage.setItem('token', data.token)
         commit('SET_LOADING')
+        return data
       })
     },
     logout ({commit}) {
       commit('SET_LOADING')
-      return api.logout().then(({data}) => {
+      return api.logout().then(() => {
         localStorage.removeItem('token')
         commit('SET_LOADING')
       })
