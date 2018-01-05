@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = (process.env.NODE_ENV === 'production') ? 'http://leads-api.go2impact.com' : 'http://leads-api.local:9000'
+const baseURL = (process.env.NODE_ENV === 'production') ? 'https://leads-api.go2impact.com' : 'http://leads-api.local:9000'
 const authHeader = 'JWT ' + localStorage.getItem('token')
 
 export default {
