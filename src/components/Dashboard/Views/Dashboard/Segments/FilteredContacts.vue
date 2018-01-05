@@ -1,5 +1,5 @@
 <template>
-  <resource-list-table :resource-name="resourceName"
+  <segment-contacts-table :resource-name="resourceName"
                        :table-columns="tableColumns">
 
     <el-table-column
@@ -43,14 +43,14 @@
       </template>
     </el-table-column>
 
-  </resource-list-table>
+  </segment-contacts-table>
 </template>
 <script>
-  import ResourceListTable from './SegmentContactsTable.vue'
+  import SegmentContactsTable from './SegmentContactsTable.vue'
 
   export default {
     components: {
-      ResourceListTable
+      SegmentContactsTable
     },
     data () {
       return {

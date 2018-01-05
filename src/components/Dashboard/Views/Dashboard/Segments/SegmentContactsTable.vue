@@ -12,9 +12,9 @@
             <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add ' + resourceName})">Add new
               {{resourceName}}
             </button>
-            <a ref="exportCSVButton" v-show="!showButton" @click="exportResource"
+            <a ref="exportCSVButton" v-show="(!showButton) && (resourceName !== 'segment')  " @click="exportResource"
                class="btn btn-primary btn-fill btn-wd">Export CSV</a>
-            <a v-show="showButton" @click="downloadResource" ref="downloadCSVButton"
+            <a v-show="showButton" ref="downloadCSVButton"
                class="btn btn-primary btn-fill btn-wd">Download
               CSV</a>
           </div>
@@ -42,6 +42,7 @@
                         v-model="pagination.currentPage"
                         :resource-name="resourceName"
                         :per-page="pagination.perPage"
+                        :get-data="getData"
                         :total="pagination.total">
           </p-pagination>
         </div>
@@ -213,29 +214,27 @@
       handleSelectionChange (val) {
         this.multipleSelection = val
       },
-      handleViewContacts (index, row) {
-        let indexToFind = this.paged.findIndex((tableRow) => tableRow.id === row.id)
-        const resourceID = this.paged[indexToFind].id
-        this.$store.dispatch('getContactsWithQuery', resourceID).then(() => {
-          this.$router.push({name: 'Filtered contacts', params: {id: resourceID}})
-        })
-      },
       exportResource () {
-        this.$store.dispatch('exportSegmentContacts')
+        this.showButton = true
+        this.$store.dispatch('exportResource', this.resourceName)
           .then(data => {
-            this.showButton = true
             this.$refs.downloadCSVButton.target = '_blank'
             this.$refs.downloadCSVButton.href = 'data:text/csv;charset=utf-8,' + encodeURI(data)
-            this.$refs.downloadCSVButton.download = `go2-leads-segment-contacts-${new Date().toLocaleString()}-export.csv`
+            this.$refs.downloadCSVButton.download = `go2-leads-${this.resourceName}-${new Date().toLocaleString()}-export.csv`
           })
       },
-      downloadResource () {
-        this.$refs.downloadCSVButton.click()
-        this.showButton = false
+      getData (value) {
+        this.$store.dispatch('getContactsWithQuery', {
+          page: value,
+          resourceID: this.$route.params.id
+        })
       }
     },
     created () {
-      this.$store.dispatch('getContactsWithQuery', this.$route.params.id)
+      this.$store.dispatch('getContactsWithQuery', {
+        resourceID: this.$route.params.id,
+        page: 1
+      })
     }
   }
 

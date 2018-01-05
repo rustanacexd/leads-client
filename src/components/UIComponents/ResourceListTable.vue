@@ -38,6 +38,7 @@
                         v-model="pagination.currentPage"
                         :resource-name="resourceName"
                         :per-page="pagination.perPage"
+                        :get-data="getData"
                         :total="pagination.total">
           </p-pagination>
         </div>
@@ -211,7 +212,11 @@
       handleViewContacts (index, row) {
         let indexToFind = this.paged.findIndex((tableRow) => tableRow.id === row.id)
         const resourceID = this.paged[indexToFind].id
-        this.$store.dispatch('getContactsWithQuery', resourceID).then(() => {
+        console.log(resourceID)
+        this.$store.dispatch('getContactsWithQuery', {
+          resourceID,
+          page: 1
+        }).then(() => {
           this.$router.push({name: 'Filtered contacts', params: {id: resourceID}})
         })
       },
@@ -223,6 +228,12 @@
             this.$refs.downloadCSVButton.href = 'data:text/csv;charset=utf-8,' + encodeURI(data)
             this.$refs.downloadCSVButton.download = `go2-leads-${this.resourceName}-${new Date().toLocaleString()}-export.csv`
           })
+      },
+      getData (value) {
+        this.$store.dispatch('getPagedResources', {
+          page: value,
+          resourceName: this.resourceName
+        })
       }
     },
     created () {

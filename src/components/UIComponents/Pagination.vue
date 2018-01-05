@@ -41,6 +41,9 @@
       },
       resourceName: {
         type: String
+      },
+      getData: {
+        type: Object
       }
     },
     computed: {
@@ -114,12 +117,6 @@
           this.$emit('input', this.value - 1)
           this.getData(this.value - 1)
         }
-      },
-      getData (value) {
-        this.$store.dispatch('getPagedResources', {
-          page: value,
-          resourceName: this.resourceName
-        })
       }
     },
     watch: {

@@ -327,7 +327,7 @@ export default new Vuex.Store({
           return data
         })
     },
-    getContactsWithQuery ({commit}, resourceID) {
+    getContactsWithQuery ({commit}, {resourceID, page}) {
       commit('SET_LOADING')
       let queryString = ''
       return api.getResource(resourceID, 'segment').then(({data}) => {
@@ -345,7 +345,7 @@ export default new Vuex.Store({
           }
           commit('SET_SEGMENT_QUERY_STRING', queryString)
 
-          return api.getContactsWithQuery(queryString).then(({data}) => {
+          return api.getContactsWithQuery(queryString, page).then(({data}) => {
             commit('SET_LOADING')
             commit('SET_RESOURCES', {data, resourceName: 'contact'})
           })

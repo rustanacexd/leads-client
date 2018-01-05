@@ -26,8 +26,8 @@ export default {
   searchResource (searchKey, resourceName) {
     return instance.get(`/${resourceName}?search=${searchKey}`)
   },
-  getContactsWithQuery (searchString) {
-    return instance.get(`/contact/?${searchString}`)
+  getContactsWithQuery (searchString, page) {
+    return instance.get(`/contact/?page=${page}&${searchString}`)
   },
   exportResourcesCSV (resourceName) {
     return instance.get(`/${resourceName}/?format=csv&page_size=5000`)
