@@ -104,6 +104,7 @@
     computed: {
       ...mapState({
         loading: state => state.loading,
+        searchString: state => state[this.resourceName].searchString,
         paged (state) {
           return state[this.resourceName].paged
         }
@@ -115,7 +116,8 @@
         set (searchKey) {
           this.$store.dispatch('searchResource', {
             searchKey,
-            resourceName: this.resourceName
+            resourceName: this.resourceName,
+            page: 1
           })
             .catch(error => {
               if (error.message) {
@@ -230,10 +232,19 @@
           })
       },
       getData (value) {
-        this.$store.dispatch('getPagedResources', {
-          page: value,
-          resourceName: this.resourceName
-        })
+        // check if searchString is not empty
+        if (this.searchString) {
+          this.$store.dispatch('searchResource', {
+            searchKey: this.searchString,
+            resourceName: this.resourceName,
+            page: this.pagination.currentPage
+          })
+        } else {
+          this.$store.dispatch('getPagedResources', {
+            page: value,
+            resourceName: this.resourceName
+          })
+        }
       }
     },
     created () {

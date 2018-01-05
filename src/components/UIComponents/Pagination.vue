@@ -43,7 +43,7 @@
         type: String
       },
       getData: {
-        type: Object
+        type: Function
       }
     },
     computed: {

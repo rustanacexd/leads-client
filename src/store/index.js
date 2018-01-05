@@ -302,10 +302,10 @@ export default new Vuex.Store({
       return api.updateResource(data, resourceName)
         .then(response => response.data)
     },
-    searchResource ({commit}, {searchKey, resourceName}) {
+    searchResource ({commit}, {searchKey, resourceName, page}) {
       commit('SET_RESOURCE_SEARCH_STRING', {searchKey, resourceName})
       commit('SET_LOADING')
-      return api.searchResource(searchKey, resourceName)
+      return api.searchResource(searchKey, resourceName, page)
         .then(({data}) => {
           commit('SET_RESOURCES', {data, resourceName})
           commit('SET_LOADING')

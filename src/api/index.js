@@ -23,8 +23,8 @@ export default {
   updateResource (data, resourceName) {
     return instance.put(`/${resourceName}/${data.id}/`, data)
   },
-  searchResource (searchKey, resourceName) {
-    return instance.get(`/${resourceName}?search=${searchKey}`)
+  searchResource (searchKey, resourceName, page) {
+    return instance.get(`/${resourceName}?page=${page}&search=${searchKey}`)
   },
   getContactsWithQuery (searchString, page) {
     return instance.get(`/contact/?page=${page}&${searchString}`)

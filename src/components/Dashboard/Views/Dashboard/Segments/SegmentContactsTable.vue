@@ -120,7 +120,8 @@
         set (searchKey) {
           this.$store.dispatch('searchResource', {
             searchKey,
-            resourceName: this.resourceName
+            resourceName: this.resourceName,
+            page: 1
           })
             .catch(error => {
               if (error.message) {
@@ -224,10 +225,19 @@
           })
       },
       getData (value) {
-        this.$store.dispatch('getContactsWithQuery', {
-          page: value,
-          resourceID: this.$route.params.id
-        })
+        // check if searchString is not empty
+        if (this.searchString) {
+          this.$store.dispatch('searchResource', {
+            searchKey: this.searchString,
+            resourceName: this.resourceName,
+            page: this.pagination.currentPage
+          })
+        } else {
+          this.$store.dispatch('getPagedResources', {
+            page: value,
+            resourceName: this.resourceName
+          })
+        }
       }
     },
     created () {
