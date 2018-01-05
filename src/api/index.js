@@ -29,11 +29,11 @@ export default {
   getContactsWithQuery (searchString) {
     return instance.get(`/contact/?${searchString}`)
   },
-  exportResourcesCSV (page, resourceName) {
-    return instance.get(`/${resourceName}/?page=${page}&format=csv`)
+  exportResourcesCSV (resourceName) {
+    return instance.get(`/${resourceName}/?format=csv&page_size=5000`)
   },
-  exportSegmentContactsCSV (queryString, page) {
-    return instance.get(`/contact/?${queryString}?page=${page}&format=csv`)
+  exportSegmentContactsCSV (queryString) {
+    return instance.get(`/contact/?${queryString}format=csv&page_size=5000`)
   },
   addSegment (data, segmentFilters) {
     return instance.post('/segment/', {...data, segment_filters: segmentFilters})

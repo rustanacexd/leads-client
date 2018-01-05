@@ -311,17 +311,17 @@ export default new Vuex.Store({
           commit('SET_LOADING')
         })
     },
-    exportResource ({commit}, {page, resourceName}) {
+    exportResource ({commit}, resourceName) {
       commit('SET_LOADING')
-      return api.exportResourcesCSV(page, resourceName)
+      return api.exportResourcesCSV(resourceName)
         .then(({data}) => {
           commit('SET_LOADING')
           return data
         })
     },
-    exportSegmentContacts ({commit, state}, page) {
+    exportSegmentContacts ({commit, state}) {
       commit('SET_LOADING')
-      return api.exportSegmentContactsCSV(state.segment.queryString, page)
+      return api.exportSegmentContactsCSV(state.segment.queryString)
         .then(({data}) => {
           commit('SET_LOADING')
           return data

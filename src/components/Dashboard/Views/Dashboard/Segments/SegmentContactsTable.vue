@@ -221,7 +221,7 @@
         })
       },
       exportResource () {
-        this.$store.dispatch('exportSegmentContacts', this.pagination.currentPage)
+        this.$store.dispatch('exportSegmentContacts')
           .then(data => {
             this.showButton = true
             this.$refs.downloadCSVButton.target = '_blank'

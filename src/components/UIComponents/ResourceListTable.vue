@@ -8,9 +8,9 @@
             <button class="btn btn-primary btn-fill btn-wd" @click="$router.push({name: 'Add ' + resourceName})">Add new
               {{resourceName}}
             </button>
-            <a ref="exportCSVButton" v-show="!showButton" @click="exportResource"
+            <a ref="exportCSVButton" v-show="(!showButton) && (resourceName !== 'segment')  " @click="exportResource"
                class="btn btn-primary btn-fill btn-wd">Export CSV</a>
-            <a v-show="showButton" @click="downloadResource" ref="downloadCSVButton"
+            <a v-show="showButton" ref="downloadCSVButton"
                class="btn btn-primary btn-fill btn-wd">Download
               CSV</a>
           </div>
@@ -216,19 +216,13 @@
         })
       },
       exportResource () {
-        this.$store.dispatch('exportResource', {
-          page: this.pagination.currentPage,
-          resourceName: this.resourceName
-        }).then(data => {
-          this.showButton = true
-          this.$refs.downloadCSVButton.target = '_blank'
-          this.$refs.downloadCSVButton.href = 'data:text/csv;charset=utf-8,' + encodeURI(data)
-          this.$refs.downloadCSVButton.download = `go2-leads-${this.resourceName}-${new Date().toLocaleString()}-export.csv`
-        })
-      },
-      downloadResource () {
-        this.$refs.downloadCSVButton.click()
-        this.showButton = false
+        this.showButton = true
+        this.$store.dispatch('exportResource', this.resourceName)
+          .then(data => {
+            this.$refs.downloadCSVButton.target = '_blank'
+            this.$refs.downloadCSVButton.href = 'data:text/csv;charset=utf-8,' + encodeURI(data)
+            this.$refs.downloadCSVButton.download = `go2-leads-${this.resourceName}-${new Date().toLocaleString()}-export.csv`
+          })
       }
     },
     created () {
