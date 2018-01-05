@@ -1,66 +1,54 @@
 import axios from 'axios'
 
-
-const instance = axios.create({
-  baseURL: (process.env.NODE_ENV === 'production') ? 'http://leads-api.go2impact.com' : 'http://leads-api.local:9000'
-})
-
-const PAGE_SIZE = 25
+const baseURL = (process.env.NODE_ENV === 'production') ? 'http://leads-api.go2impact.com' : 'http://leads-api.local:9000'
+const authHeader = 'JWT ' + localStorage.getItem('token')
 
 export default {
+  login (username, password) {
+    return axios.post(`${baseURL}/rest-auth/login/`, {username, password})
+  },
+  logout () {
+    return axios.post(`${baseURL}/rest-auth/logout/`, {headers: {Authorization: authHeader}})
+  },
   getPagedResources (page, resourceName) {
-    return instance.get(`/${resourceName}/?page=${page}`)
+    return axios.get(`${baseURL}/${resourceName}/?page=${page}`, {headers: {Authorization: authHeader}})
   },
   deleteResource (resourceID, resourceName) {
-    return instance.delete(`/${resourceName}/${resourceID}/`)
+    return axios.delete(`${baseURL}/${resourceName}/${resourceID}/`, {headers: {Authorization: authHeader}})
   },
   getResource (resourceID, resourceName) {
-    return instance.get(`/${resourceName}/${resourceID}/`)
+    return axios.get(`${baseURL}/${resourceName}/${resourceID}/`, {headers: {Authorization: authHeader}})
   },
   addResource (data, resourceName) {
-    return instance.post(`/${resourceName}/`, data)
+    return axios.post(`${baseURL}/${resourceName}/`, data, {headers: {Authorization: authHeader}})
   },
   updateResource (data, resourceName) {
-    return instance.put(`/${resourceName}/${data.id}/`, data)
+    return axios.put(`${baseURL}/${resourceName}/${data.id}/`, data, {headers: {Authorization: authHeader}})
   },
   searchResource (searchKey, resourceName, page) {
-    return instance.get(`/${resourceName}?page=${page}&search=${searchKey}`)
+    return axios.get(`${baseURL}/${resourceName}?page=${page}&search=${searchKey}`, {headers: {Authorization: authHeader}})
   },
   getContactsWithQuery (searchString, page) {
-    return instance.get(`/contact/?page=${page}&${searchString}`)
+    return axios.get(`${baseURL}/contact/?page=${page}&${searchString}`, {headers: {Authorization: authHeader}})
   },
   exportResourcesCSV (resourceName) {
-    return instance.get(`/${resourceName}/?format=csv&page_size=5000`)
+    return axios.get(`${baseURL}/${resourceName}/?format=csv&page_size=5000`, {headers: {Authorization: authHeader}})
   },
   exportSegmentContactsCSV (queryString) {
-    return instance.get(`/contact/?${queryString}format=csv&page_size=5000`)
+    return axios.get(`${baseURL}/contact/?${queryString}format=csv&page_size=5000`, {headers: {Authorization: authHeader}})
   },
   addSegment (data, segmentFilters) {
-    return instance.post('/segment/', {...data, segment_filters: segmentFilters})
+    return axios.post(`${baseURL}/segment/`, {
+      ...data,
+      segment_filters: segmentFilters
+    }, {headers: {Authorization: authHeader}})
       .then(({data}) => data.id)
   },
   updateSegment (data, segmentFilters) {
-    return instance.put(`/segment/${data.id}/`, {...data, segment_filters: segmentFilters})
+    return axios.put(`${baseURL}/segment/${data.id}/`, {
+      ...data,
+      segment_filters: segmentFilters
+    }, {headers: {Authorization: authHeader}})
       .then(({data}) => data.id)
-  },
-  getAllOrganizations () {
-    return instance.get('/organization/').then(({data: {count, results}}) => {
-      return {count, results}
-    })
-  },
-  fetchAllOrgs (count) {
-    let orgPromises = []
-
-    for (let i = 2; i <= count / PAGE_SIZE; i++) {
-      orgPromises.push(instance.get(`/organization/?page=${i}`))
-    }
-
-    return axios.all(orgPromises).then(results => {
-      let totalOrganizations = []
-      results.forEach(response => {
-        totalOrganizations = [...totalOrganizations, ...response.data.results]
-      })
-      return totalOrganizations
-    })
   }
 }

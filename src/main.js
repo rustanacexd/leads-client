@@ -40,6 +40,16 @@ const router = new VueRouter({
   linkActiveClass: 'active'
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'login' && localStorage.getItem('token') === null) {
+    next('/login')
+  } else if (to.name === 'login' && localStorage.getItem('token') !== null) {
+    next('/admin')
+  } else {
+    next()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

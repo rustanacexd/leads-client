@@ -16,20 +16,14 @@
           <ul class="nav" v-show="!isClosed">
             <li>
               <a href="javascript:void(0)">
-                <span class="sidebar-mini">Mp</span>
-                <span class="sidebar-normal">My Profile</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <span class="sidebar-mini">Ep</span>
-                <span class="sidebar-normal">Edit Profile</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
                 <span class="sidebar-mini">S</span>
                 <span class="sidebar-normal">Settings</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" @click="logout">
+                <span class="sidebar-mini">LO</span>
+                <span class="sidebar-normal">Logout</span>
               </a>
             </li>
           </ul>
@@ -40,18 +34,24 @@
 </template>
 <script>
   import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+
   export default {
     components: {
       [CollapseTransition.name]: CollapseTransition
     },
     data () {
       return {
-        isClosed: true
+        isClosed: false
       }
     },
     methods: {
       toggleMenu () {
         this.isClosed = !this.isClosed
+      },
+      logout () {
+        this.$store.dispatch('logout').then(() => {
+          this.$router.push('/login')
+        })
       }
     }
   }

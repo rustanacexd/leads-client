@@ -269,6 +269,20 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    login ({commit}, {username, password}) {
+      commit('SET_LOADING')
+      return api.login(username, password).then(({data}) => {
+        localStorage.setItem('token', data.token)
+        commit('SET_LOADING')
+      })
+    },
+    logout ({commit}) {
+      commit('SET_LOADING')
+      return api.logout().then(({data}) => {
+        localStorage.removeItem('token')
+        commit('SET_LOADING')
+      })
+    },
     getPagedResources ({commit}, {page, resourceName}) {
       commit('SET_LOADING')
       api.getPagedResources(page, resourceName)

@@ -1,6 +1,8 @@
 import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
 // GeneralViews
 import NotFound from '../components/GeneralViews/NotFoundPage.vue'
+import LoginPage from '../components/GeneralViews/LoginPage.vue'
+
 // Dashboard pages
 import Overview from 'src/components/Dashboard/Views/Dashboard/Overview.vue'
 import Contacts from 'src/components/Dashboard/Views/Dashboard/Contacts/Contacts.vue'
@@ -25,6 +27,11 @@ const routes = [
     path: '/',
     component: DashboardLayout,
     redirect: '/admin/overview'
+  },
+  {
+    path: '/login',
+    component: LoginPage,
+    name: 'login'
   },
   {
     path: '/admin',
