@@ -292,12 +292,17 @@ export default new Vuex.Store({
           commit('SET_RESOURCE_SEARCH_STRING', {searchKey: '', resourceName})
           commit('SET_LOADING')
         })
+        .catch(response => {
+          console.log(response)
+        })
     },
     getResource ({commit}, {id, resourceName}) {
       commit('SET_LOADING')
       return api.getResource(id, resourceName).then(({data}) => {
         commit('SET_RESOURCE', {data, resourceName})
         commit('SET_LOADING')
+      }).catch(response => {
+        console.log(response)
       })
     },
     deleteResource ({commit}, {resourceID, resourceName}) {
