@@ -217,7 +217,7 @@
       },
       exportResource () {
         this.showButton = true
-        this.$store.dispatch('exportResource', this.resourceName)
+        this.$store.dispatch('exportSegmentContacts')
           .then(data => {
             this.$refs.downloadCSVButton.target = '_blank'
             this.$refs.downloadCSVButton.href = 'data:text/csv;charset=utf-8,' + encodeURI(data)
