@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import api from '../api'
+import {handleError} from '../helpers'
 
 Vue.use(Vuex)
 
@@ -292,17 +293,13 @@ export default new Vuex.Store({
           commit('SET_RESOURCE_SEARCH_STRING', {searchKey: '', resourceName})
           commit('SET_LOADING')
         })
-        .catch(response => {
-          console.log(response)
-        })
+        .catch(error => handleError(error))
     },
     getResource ({commit}, {id, resourceName}) {
       commit('SET_LOADING')
       return api.getResource(id, resourceName).then(({data}) => {
         commit('SET_RESOURCE', {data, resourceName})
         commit('SET_LOADING')
-      }).catch(response => {
-        console.log(response)
       })
     },
     deleteResource ({commit}, {resourceID, resourceName}) {
@@ -429,22 +426,6 @@ export default new Vuex.Store({
         commit('SET_RESOURCE', {data: {}, resourceName: 'segment'})
         commit('RESET_SEGMENT_FILTERS')
         return id
-      })
-    },
-    getAllOrganizations ({commit, state}) {
-      commit('SET_LOADING')
-      api.getAllOrganizations().then(({count, results}) => {
-        let totalOrganizations = [...results]
-
-        if (state.contact.total !== count) {
-          api.fetchAllOrgs(count).then(results => {
-            totalOrganizations = [...totalOrganizations, ...results]
-            commit('SET_ORGS', totalOrganizations)
-          })
-        }
-
-        commit('SET_TOTAL_ORG_COUNT', count)
-        commit('SET_LOADING')
       })
     }
   }
