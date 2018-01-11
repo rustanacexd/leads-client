@@ -4,13 +4,11 @@
        :data-active-color="activeColor">
     <div class="logo">
       <a class="simple-text logo-mini"
-         href="https://www.creative-tim.com/product/vue-paper-dashboard-pro">
-          <div class="logo-img">
-              <img :src="logo" alt="">
-          </div>
+         href="/">
+
       </a>
       <a class="simple-text logo-normal"
-         href="https://www.creative-tim.com/vue-paper-dashboard-pro">
+         href="/">
           {{ title }}
       </a>
     </div>
